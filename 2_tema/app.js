@@ -1,15 +1,22 @@
-var Hotel = {
-    name: "",
-    location: "",
-}
+// Objetivo 1 [Datos del hotel]
+var hotel = {
+  name: "Mencey",
+  location: "Tenerife",
+  img:
+    "https://media-cdn.tripadvisor.com/media/photo-m/1280/17/2f/e9/d7/iberostar-grand-mencey.jpg",
+};
 
-Hotel.name = prompt("Introduce el nombre del Hotel");
+document.getElementById("name-hotel").innerHTML = "Hotel " + hotel.name;
+document.getElementById("location-hotel").innerHTML =
+  "Ubicado en " + hotel.location;
+document.getElementById("img-hotel").src = hotel.img;
 
-//var concatNameHotel = "Hotel " + nameHotel + " es un hotel excelente";
+// Objetivo 2 [Puntuación del hotel]
+var rating = prompt("Puntuación: del 1 al 5");
 
-document.getElementById("hotel-name").innerHTML = "Hotel " + Hotel.name ;
+document.getElementById("rating").innerHTML = rating + " estrellas";
 
-Hotel.location = prompt ("Introduce la ubicación del Hotel");
+// Objetivo 3 [Usuario anónimo]
+var anonymous = confirm("¿Quiere que la reseña sea anónima?");
 
-document.getElementById("hotel-location").innerHTML = Hotel.location;
-
+document.getElementById("anonymous").checked = anonymous;
