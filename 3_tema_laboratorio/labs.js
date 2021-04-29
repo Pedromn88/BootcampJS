@@ -27,3 +27,10 @@ switch (product.type) {
 const IVAtotal = total * tipoIVA
 console.log (IVAtotal)
 console.log (total + IVAtotal)
+
+
+
+
+
+
+console.log(empleado.bruto);
