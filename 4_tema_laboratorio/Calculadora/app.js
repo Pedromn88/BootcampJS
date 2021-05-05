@@ -29,12 +29,12 @@
 
 
 var numeroAnterior = document.getElementById("numero_anterior")
-var numeroActual = document.getElementById("numero_actual")
+var numeroActual = document.getElementById("numero_actual").valor;
 
-var sumNumber = () => numeroAnterio() + numeroActual()
-var restNumber = () => numeroAnterio() - numeroActual()
-var multiNumber = () => numeroAnterio() * numeroActual()
-var diviNumber = () => numeroAnterio() / numeroActual()
+var sumNumber = () => numeroAnterior() + numeroActual()
+var restNumber = () => numeroAnterior() - numeroActual()
+var multiNumber = () => numeroAnterior() * numeroActual()
+var diviNumber = () => numeroAnterior() / numeroActual()
 
 
 var showsuma = () =>
@@ -54,6 +54,3 @@ document.getElementById("multi").addEventListener("click", showmulti);
 
 document.getElementById("division").addEventListener("click", showdivision);
 
-
-
-//Hotel
