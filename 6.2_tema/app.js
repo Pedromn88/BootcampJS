@@ -1,7 +1,9 @@
 var plainAlphabet = "abcdefghijklmnopqrstuvwxyz:()!¡,'";
 var encryptedAlphabet = "qw,ert(yuio'pa:sdfg!hjklz¡xcv)bnm";
 
-var text = () => document.getElementById("texto1").value;
+//ENCRIPTAR
+
+var text = () => document.getElementById("texto").value;
 
 var searchIndex = (str, value) => {
     for (var i = 0; i < str.length; i++) {
@@ -10,7 +12,7 @@ var searchIndex = (str, value) => {
     return -1
 }
 
-var transformText = (text) => {
+var transformTextEncrypt = (text) => {
     var result= "";
     for (var i = 0; i< text.length; i++) {
         var indexPosition = searchIndex(plainAlphabet, text [i]);
@@ -24,17 +26,51 @@ var transformText = (text) => {
 }
 }
 
-var transformMessenger = message => {
+var transformMessengerEncrypt = message => {
     var messageLowerCase = message.toLowerCase();
     var result="";
     for (var value of messageLowerCase) {
-        result = result + transformText(value)
+        result = result + transformTextEncrypt(value)
     }
     return result;
 }
 
 
-var resulDescrypt = () => document.getElementById("resultado").innerText = transformMessenger(text);
+//DESCRYPT
 
-document.getElementById("descrypt").addEventListener("click", resulDescrypt);
+/*var searchIndex = (str, value) => {
+    for (var i = 0; i < str.length; i++) {
+        if (str[i] === value) return i;
+    }
+    return -1
+}*/
+
+var transformTextDescrypt = (text) => {
+    var result= "";
+    for (var i = 0; i< text.length; i++) {
+        var indexPosition = searchIndex(encryptedAlphabet, text [i]);
+        if (indexPosition > -1) {
+        result = result + plainAlphabet[indexPosition];
+    } else {
+        result = result + text[i];
+    }
+
+    return result; 
+}
+}
+
+var transformMessengerDescrypt = message => {
+    var messageLowerCase = message.toLowerCase();
+    var result="";
+    for (var value of messageLowerCase) {
+        result = result + transformTextDescrypt(value)
+    }
+    return result;
+}
+
+var resultadoEncrypt = () => document.getElementById("resultado").innerText = transformMessengerEncrypt(text);
+var resultadoDescrypt = () => document.getElementById("resultado").innerText = transformMessengerDescrypt(text);
+
+document.getElementById("encrypt").addEventListener("click", resultadoEncrypt);
+document.getElementById("descrypt").addEventListener("click", resultadoDescrypt);
 
