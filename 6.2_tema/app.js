@@ -74,3 +74,9 @@ var resultadoDescrypt = () => document.getElementById("resultado").innerText = t
 document.getElementById("encrypt").addEventListener("click", resultadoEncrypt);
 document.getElementById("descrypt").addEventListener("click", resultadoDescrypt);
 
+//Generador Aleatorio
+
+var aleatorio = (max, min) => Math.floor(Math.random() * (max - min) + min)
+for (i = 0; i < 10; i++) {
+console.log(aleatorio( 1, 100))
+}
