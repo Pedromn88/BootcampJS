@@ -2,6 +2,7 @@ var plainAlphabet = "abcdefghijklmnopqrstuvwxyz:()!¡,'";
 var encryptedAlphabet = "qw,ert(yuio'pa:sdfg!hjklz¡xcv)bnm";
 
 var text = () => document.getElementById("texto1").value;
+
 var searchIndex = (str, value) => {
     for (var i = 0; i < str.length; i++) {
         if (str[i] === value) return i;
@@ -33,7 +34,7 @@ var transformMessenger = message => {
 }
 
 
-var resultado = () => document.getElementById("resultado").innerText = transformMessenger(text);
+var resulDescrypt = () => document.getElementById("resultado").innerText = transformMessenger(text);
 
-document.getElementById("descrypt").addEventListener("click", resultado);
+document.getElementById("descrypt").addEventListener("click", resulDescrypt);
 
