@@ -88,12 +88,11 @@ showProducts(products);
 document.getElementById("btn").addEventListener("click", () => console.log(products));
 
 
-
+function calculo () {
 var subtotal = 0
 for (i=0; i < products.length; i++) {
  subtotal += products[i].price * products [i].units
 }
-console.log(subtotal)
 
 var impuestos = 0
 for (i=0; i < products.length; i++) {
@@ -106,17 +105,16 @@ for (i=0; i < products.length; i++) {
  } 
 }
  
-
-console.log(impuestos)
-
 var total = 0
 for (i=0; i < products.length; i++) {
  total += subtotal + impuestos;
-console.log(total)
+}
 }
 
+var subtotal1 = () => document.getElementById("subtotal").innerText = calculo (products);
+var impuestos1 = () => document.getElementById("impuestos").innerText = calculo (products);
+var total1 = () => document.getElementById("total").innerText = calculo (products);
 
-
-
-
-
+document.getElementById("btn").addEventListener("click", subtotal1);
+document.getElementById("btn").addEventListener("click", impuestos1);
+document.getElementById("btn").addEventListener("click", total1);
