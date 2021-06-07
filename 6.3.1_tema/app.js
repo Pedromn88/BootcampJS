@@ -42,18 +42,8 @@ function horario (empleado){
   console.log(empleado.name)
   for (var i = 0; i < WORK_HOURS.length; i++) {
   var horarioRandom = (a, b) => Math.round(Math.random()) ? a : b;
-  console.log(WORK_HOURS[i]); 
-  console.log(horarioRandom("si", "no"))
+  console.log(WORK_HOURS[i] + ":" + "  "+ horarioRandom ("Si", "No")); 
+ 
   }
- }
 
- function buscarElemento(horarioRandom, elemento) {
-  for(let i = 0; i < horarioRandom.length; i++) {
-      if (horarioRandom[i] === elemento) {
-          return i;
-      }
-  }
-  return -1;
 }
-
-console.log(buscarElemento, si)
