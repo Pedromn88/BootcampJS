@@ -48,16 +48,6 @@ function horario (empleado){
   }
 
 }
-  function linearSearch(horarioEmpleado, target){
-    for(let i = 0; i < horarioEmpleado.length; i++){
-        if(horarioEmpleado[i] === key){
-            return i
-        }
-    }
-    return -1
-}
-
-console.log (linearSearch(horarioEmpleado.indexOf(a)))
 
 
 
