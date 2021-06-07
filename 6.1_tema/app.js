@@ -88,33 +88,29 @@ showProducts(products);
 document.getElementById("btn").addEventListener("click", () => console.log(products));
 
 
-function calculo () {
-var subtotal = 0
-for (i=0; i < products.length; i++) {
- subtotal += products[i].price * products [i].units
-}
 
-var impuestos = 0
-for (i=0; i < products.length; i++) {
-  if (products.tax == LOWER_TYPE) {
-   impuestos += products.price * 0.04
- } else if (products.tax == REGULAR_TYPE){
-  impuestos += products.price * 0.21}
-  else if(products.tax == EXEMPT_TYPE) 
- {impuestos += products.price * 0
- } 
-}
- 
-var total = 0
-for (i=0; i < products.length; i++) {
- total += subtotal + impuestos;
-}
-}
+var total = function() {
+    var subtotal = 0
+    for (i=0; i < products.length; i++) {
+     subtotal += products[i].price * products[i].units
+    }
+    var impuestos = 0 
+    for (i=0; i < products.length; i++)
+    if (products.tax === LOWER_TYPE) {
+      impuestos += subtotal * 0.04
+    }else if (products.tax == REGULAR_TYPE){
+     impuestos += products[i].tax * products[i].units * 0.21}
+     else if(products.tax == EXEMPT_TYPE) 
+    {impuestos += products[i].tax * products[i].units * 0
+    } 
+   var sumatorio = subtotal + impuestos
 
-var subtotal1 = () => document.getElementById("subtotal").innerText = calculo (products);
-var impuestos1 = () => document.getElementById("impuestos").innerText = calculo (products);
-var total1 = () => document.getElementById("total").innerText = calculo (products);
+   return sumatorio
+  }
+   
 
-document.getElementById("btn").addEventListener("click", subtotal1);
-document.getElementById("btn").addEventListener("click", impuestos1);
+var total1 = () => document.getElementById("subtotal").innerText = total (products);
+
 document.getElementById("btn").addEventListener("click", total1);
+
+
