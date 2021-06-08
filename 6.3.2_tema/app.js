@@ -43,30 +43,21 @@ for(i=0; i<monedas.length; i++)
 var importe = () => document.getElementById("input-number1").value;
 var entregado = () => document.getElementById("input-number2").value;
 
-//var resta = () => entregado() - importe();
-
-/*function suma() {
-    var resta =  entregado () - importe ();
-    var cambio20 = resta / 20
-    if (cambio20 >= 1) return cambio20 + "" + "Billetes de 200";
-    }*/
-    
-
 
 var cambioBilletes = function() {
 var resta =  entregado () - importe ();
 var cambio200 = resta / 200
-if (cambio200 >= 1) return cambio200 + " " + "Billetes de 200";
+if (cambio200 >= 1) return Math.trunc(cambio200) + " " + "Billetes de 200";
 var cambio100 = resta / 100
-if (cambio100 >= 1) return cambio100 + " " + "Billetes de 100";
+if (cambio100 >= 1) return Math.trunc(cambio100) + " " + "Billetes de 100";
 var cambio50 = resta/ 50
-if (cambio50 >= 1) return cambio50 + " " + "Billetes de 50";
+if (cambio50 >= 1) return Math.trunc(cambio50) + " " + "Billetes de 50";
 var cambio20 = resta / 20
-if (cambio20 >= 1) return cambio20 + " " + "Billetes de 20";
+if (cambio20 >= 1) return Math.trunc(cambio20) + " " + "Billetes de 20";
 var cambio10 = resta / 10
-if (cambio10 >= 1) return cambio10 + " " + "Billetes de 10";
+if (cambio10 >= 1) return Math.trunc(cambio10) + " " + "Billetes de 10";
 var cambio5 = resta / 5
-if (cambio5 >= 1) return cambio5 + " " + "Billetes de 5";
+if (cambio5 >= 1) return Math.trunc(cambio5) + " " + "Billetes de 5";
 }
 
 
