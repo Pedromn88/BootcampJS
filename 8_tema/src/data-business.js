@@ -172,4 +172,4 @@ function getAccounts() {
   ];
 }
 
-  export { getClients, getAccounts };
+  export { getAccounts, getClients };

@@ -123,8 +123,8 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getClients = getClients;
 exports.getAccounts = getAccounts;
+exports.getClients = getClients;
 
 function getClients() {
   return [{
