@@ -42,16 +42,9 @@ function horario (empleado){
   console.log(empleado.name)
   for (var i = 0; i < WORK_HOURS.length; i++) {
   var horarioRandom = (a, b) => Math.round(Math.random()) ? a : b;
-  var horarioEmpleado = (WORK_HOURS[i] + ":" + "  "+ horarioRandom ("Si", "No")); 
-  console.log(horarioEmpleado)
- 
-  }
-
+  var horarioEmpleado = (horarioRandom ("si", "no"))
+  if (horarioEmpleado == "si") console.log((WORK_HOURS[i] + ":" + "  "+ "horario disponible"))
+  else if (horarioEmpleado == "no") console.log((WORK_HOURS[i] + ":" + "  "+ "horario no disponible"))
+  } 
 }
-
-
-
-
-
-
-
+  
