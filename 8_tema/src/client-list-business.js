@@ -1,11 +1,11 @@
-import * as ClientElement from "./client-business";
-import * as Clients from "./data-business";
+import * as client from "./data-business";
+import * as clientElement from "./client-business";
 
 function printClientsAccounts() {
-  const clients = Clients.getClients();
+  const clients = client.getClients();
   const ul = document.createElement("ul");
   for (let client of clients) {
-    const element = ClientElement.getClientElement(client);
+    const element = clientElement.getClientElement(client);
     ul.appendChild(element);
   }
 

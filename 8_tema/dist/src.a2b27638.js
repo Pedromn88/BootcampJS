@@ -337,7 +337,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.getClientElement = getClientElement;
-exports.getFullName = getFullName;
 
 var dataBusiness = _interopRequireWildcard(require("./data-business"));
 
@@ -397,9 +396,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.printClientsAccounts = printClientsAccounts;
 
-var ClientElement = _interopRequireWildcard(require("./client-business"));
+var client = _interopRequireWildcard(require("./data-business"));
 
-var Clients = _interopRequireWildcard(require("./data-business"));
+var clientElement = _interopRequireWildcard(require("./client-business"));
 
 function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function (nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
@@ -412,7 +411,7 @@ function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o =
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 function printClientsAccounts() {
-  var clients = Clients.getClients();
+  var clients = client.getClients();
   var ul = document.createElement("ul");
 
   var _iterator = _createForOfIteratorHelper(clients),
@@ -420,8 +419,8 @@ function printClientsAccounts() {
 
   try {
     for (_iterator.s(); !(_step = _iterator.n()).done;) {
-      var client = _step.value;
-      var element = ClientElement.getClientElement(client);
+      var _client = _step.value;
+      var element = clientElement.getClientElement(_client);
       ul.appendChild(element);
     }
   } catch (err) {
@@ -432,7 +431,7 @@ function printClientsAccounts() {
 
   document.getElementById("root").appendChild(ul);
 }
-},{"./client-business":"src/client-business.js","./data-business":"src/data-business.js"}],"src/index.js":[function(require,module,exports) {
+},{"./data-business":"src/data-business.js","./client-business":"src/client-business.js"}],"src/index.js":[function(require,module,exports) {
 "use strict";
 
 var Print = _interopRequireWildcard(require("./client-list-business"));

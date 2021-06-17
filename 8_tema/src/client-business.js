@@ -29,5 +29,6 @@ function getFullName(client) {
   return client.first_name + " " + client.last_name;
 }
 
-export { getClientElement, getFullName };
+export { getClientElement };
+
   
