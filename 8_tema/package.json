@@ -1,11 +1,24 @@
 {
-  "name": "8_tema",
+  "name": "vanilla",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "JavaScript example starter project",
+  "main": "index.html",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "parcel index.html --open",
+    "build": "parcel build index.html"
   },
-  "author": "",
-  "license": "ISC"
+  "dependencies": {
+    "axios": "^0.21.1",
+    "parcel-bundler": "^1.6.1"
+  },
+  "devDependencies": {
+    "@babel/core": "7.2.0"
+  },
+  "resolutions": {
+    "@babel/preset-env": "7.13.8"
+  },
+  "keywords": [
+    "javascript",
+    "starter"
+  ]
 }

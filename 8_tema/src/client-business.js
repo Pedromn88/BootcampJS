@@ -30,5 +30,3 @@ function getFullName(client) {
 }
 
 export { getClientElement };
-
-  

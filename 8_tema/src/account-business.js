@@ -17,4 +17,4 @@ function getAccountElement(account) {
   return li;
 }
 
-export { getAccountElement, getClientAccountsElement };
+export { getClientAccountsElement, getAccountElement };

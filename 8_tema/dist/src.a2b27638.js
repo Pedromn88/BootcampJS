@@ -289,8 +289,8 @@ function getNodeStyle(account) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getAccountElement = getAccountElement;
 exports.getClientAccountsElement = getClientAccountsElement;
+exports.getAccountElement = getAccountElement;
 
 var styleBusiness = _interopRequireWildcard(require("./style-business"));
 
