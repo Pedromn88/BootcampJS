@@ -1886,7 +1886,7 @@ module.exports = require('./lib/axios');
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getMovementsList = void 0;
+exports.getAccount = exports.getMovements = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -1894,13 +1894,31 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var url = "".concat("http://localhost:3000/api", "/movements");
 
-var getMovementsList = function getMovementsList() {
-  return _axios.default.get(url).then(function (movements) {
-    return movements.data;
+var getMovements = function getMovements() {
+  return _axios.default.get(url, {
+    params: {
+      accountId: id
+    }
+  }).then(function (_ref) {
+    var data = _ref.data;
+    return data;
   });
 };
 
-exports.getMovementsList = getMovementsList;
+exports.getMovements = getMovements;
+
+var getAccount = function getAccount(id) {
+  return _axios.default.get(url, {
+    params: {
+      accountId: id
+    }
+  }).then(function (_ref2) {
+    var data = _ref2.data;
+    return data;
+  });
+};
+
+exports.getAccount = getAccount;
 },{"axios":"../node_modules/axios/index.js"}],"pages/movements/movements.helpers.js":[function(require,module,exports) {
 "use strict";
 
@@ -1970,6 +1988,7 @@ exports.mapMovementsListApiToVm = mapMovementsListApiToVm;
 
 var mapMovementsApiToVm = function mapMovementsApiToVm(movements) {
   return {
+    id: movements.id,
     transaction: new Date(movements.transaction).toLocaleDateString(),
     realTransaction: new Date(movements.realTransaction).toLocaleDateString(),
     description: movements.description,
@@ -4183,7 +4202,97 @@ Object.keys(_history).forEach(function (key) {
     }
   });
 });
-},{"./routes":"core/router/routes.js","./history":"core/router/history.js"}],"pages/movements/movements.js":[function(require,module,exports) {
+},{"./routes":"core/router/routes.js","./history":"core/router/history.js"}],"pages/account-list/account-list.api.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getAccountList = void 0;
+
+var _axios = _interopRequireDefault(require("axios"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var url = "".concat("http://localhost:3000/api", "/account-list");
+
+var getAccountList = function getAccountList() {
+  return _axios.default.get(url).then(function (response) {
+    return response.data;
+  });
+};
+
+exports.getAccountList = getAccountList;
+},{"axios":"../node_modules/axios/index.js"}],"pages/account/account.mappers.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.mapAccountApiToVm = exports.mapAccountVmToApi = void 0;
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var mapAccountVmToApi = function mapAccountVmToApi(account) {
+  return _objectSpread(_objectSpread({}, account), {}, {
+    name: account.alias
+  });
+};
+
+exports.mapAccountVmToApi = mapAccountVmToApi;
+
+var mapAccountApiToVm = function mapAccountApiToVm(account) {
+  return _objectSpread(_objectSpread({}, account), {}, {
+    alias: account.name
+  });
+};
+
+exports.mapAccountApiToVm = mapAccountApiToVm;
+},{}],"pages/account/account.api.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.updateAccount = exports.getAccount = exports.insertAccount = void 0;
+
+var _axios = _interopRequireDefault(require("axios"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var url = "".concat("http://localhost:3000/api", "/account");
+
+var insertAccount = function insertAccount(account) {
+  return _axios.default.post("".concat(url, "/").concat(account.id), account).then(function (_ref) {
+    var data = _ref.data;
+    return data;
+  });
+};
+
+exports.insertAccount = insertAccount;
+
+var getAccount = function getAccount(id) {
+  return _axios.default.get("".concat(url, "/").concat(id)).then(function (_ref2) {
+    var data = _ref2.data;
+    return data;
+  });
+};
+
+exports.getAccount = getAccount;
+
+var updateAccount = function updateAccount(account) {
+  return _axios.default.put("".concat(url, "/").concat(account.id), account).then(function (_ref3) {
+    var data = _ref3.data;
+    return data;
+  });
+};
+
+exports.updateAccount = updateAccount;
+},{"axios":"../node_modules/axios/index.js"}],"pages/movements/movements.js":[function(require,module,exports) {
 "use strict";
 
 var _movements = require("./movements.api");
@@ -4196,13 +4305,57 @@ var _helpers = require("../../common/helpers");
 
 var _router = require("../../core/router");
 
+var _accountList = require("../account-list/account-list.api");
+
+var _account2 = require("../account/account.mappers");
+
+var _account3 = require("../account/account.api");
+
+var getId = function getId() {
+  if (window.location.search) {
+    var index = Array.from(window.location.search).findIndex(function (el) {
+      return el === "=";
+    }) + 1;
+    var id = Array.from(window.location.search).slice(index).join('');
+    return id;
+  } else {
+    var _id = '';
+    return _id;
+  }
+};
+
+(0, _accountList.getAccountList)().then(function (data) {
+  if (getId()) {
+    var _account = data.filter(function (el) {
+      return el.id === getId();
+    });
+
+    var balance = document.getElementById('balance');
+    var iban = document.getElementById('iban');
+    var name = document.getElementById('alias');
+    balance.innerText = "".concat(_account[0].balance, " \u20AC");
+    iban.innerText = _account[0].iban;
+    name.innerText = _account[0].name;
+  }
+});
+getMovements(account).then(function (movementsList) {
+  return (0, _movements2.addMovementsRows)(movementsList);
+});
+
 var params = _router.history.getParams();
 
 var isEditMode = Boolean(params.id);
 
+if (isEditMode) {
+  (0, _account3.getAccount)(params.id).then(function (apiAccount) {
+    account = (0, _account2.mapAccountApiToVm)(apiAccount);
+    (0, _helpers.onSetValues)(account);
+  });
+}
+
 var setEvents = function setEvents(movementsList) {
-  movementsList.forEach(function (movements) {
-    (0, _helpers.onUpdateField)("select-".concat(movements.id), function (event) {
+  movementsList.forEach(function (account) {
+    (0, _helpers.onUpdateField)("select-".concat(account.id), function (event) {
       var route = event.target.value;
 
       _router.history.push(route);
@@ -4212,10 +4365,10 @@ var setEvents = function setEvents(movementsList) {
 
 (0, _movements.getMovementsList)().then(function (movementsList) {
   var vmMovementsList = (0, _movements3.mapMovementsListApiToVm)(movementsList);
-  (0, _movements2.addMovementRows)(vmMovementsList);
+  (0, _movements2.addMovementsRows)(vmMovementsList);
   setEvents(vmMovementsList);
 });
-},{"./movements.api":"pages/movements/movements.api.js","./movements.helpers":"pages/movements/movements.helpers.js","./movements.mappers":"pages/movements/movements.mappers.js","../../common/helpers":"common/helpers/index.js","../../core/router":"core/router/index.js"}],"../node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./movements.api":"pages/movements/movements.api.js","./movements.helpers":"pages/movements/movements.helpers.js","./movements.mappers":"pages/movements/movements.mappers.js","../../common/helpers":"common/helpers/index.js","../../core/router":"core/router/index.js","../account-list/account-list.api":"pages/account-list/account-list.api.js","../account/account.mappers":"pages/account/account.mappers.js","../account/account.api":"pages/account/account.api.js"}],"../node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -4243,7 +4396,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50623" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64746" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
