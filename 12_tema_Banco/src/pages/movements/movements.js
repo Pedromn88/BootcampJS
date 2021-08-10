@@ -2,7 +2,7 @@ import { getMovementsList } from './movements.api';
 import { addMovementRows } from './movements.helpers';
 import { mapMovementsListApiToVm } from './movements.mappers';
 import { history } from '../../core/router';
-import { onSetValues, onUpdateField } from '../../common/helpers';
+import { onSetValues} from '../../common/helpers';
 
 
 
