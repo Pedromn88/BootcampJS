@@ -7,7 +7,7 @@ import { mapAccountVmToApi, mapAccountApiToVm } from './account.mappers';
 let account = {
 id: '',
 type: '',
-lias: '',
+alias: '',
 };
 
 const params = history.getParams();
@@ -26,7 +26,6 @@ const onSave = () => {
 };
     
     
-
 onUpdateField('type', event => {
 const value = event.target.value;
 account = { ...account, type: value };
