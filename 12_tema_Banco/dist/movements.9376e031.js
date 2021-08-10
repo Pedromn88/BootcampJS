@@ -1896,7 +1896,9 @@ var url = "".concat("http://localhost:3000/api", "/movements");
 
 var getMovementsList = function getMovementsList(id) {
   return _axios.default.get(url, {
-    params: id
+    params: {
+      accountId: id
+    }
   }).then(function (_ref) {
     var data = _ref.data;
     return data;
@@ -4202,12 +4204,12 @@ var _helpers = require("../../common/helpers");
 
 var params = _router.history.getParams();
 
-var isEditMode = Boolean(params.Id);
+var isEditMode = Boolean(params.AccountId);
 
 if (isEditMode) {
-  (0, _movements.getMovementsList)(params.Id).then(function (apiMovements) {
-    movements = mapMovementsApiToVm(apiMovements);
-    (0, _helpers.onSetValues)(movements);
+  (0, _movements.getMovementsList)(params.AccountId).then(function (apiMovements) {
+    movementsLits = mapMovementsApiToVm(apiMovements);
+    (0, _helpers.onSetValues)(movementsList);
   });
 }
 

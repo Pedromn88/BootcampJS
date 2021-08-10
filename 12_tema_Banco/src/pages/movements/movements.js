@@ -5,15 +5,12 @@ import { history } from '../../core/router';
 import { onSetValues} from '../../common/helpers';
 
 
-
-
-
 const params = history.getParams();
-const isEditMode = Boolean(params.Id);
+const isEditMode = Boolean(params.AccountId);
 if (isEditMode) {
-getMovementsList(params.Id).then(apiMovements => {
-movements = mapMovementsApiToVm(apiMovements);
-onSetValues(movements);
+getMovementsList(params.AccountId).then(apiMovements => {
+movementsLits = mapMovementsApiToVm(apiMovements);
+onSetValues(movementsList);
 });
 }
 
