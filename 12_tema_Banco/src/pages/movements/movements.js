@@ -5,20 +5,20 @@ import { history } from '../../core/router';
 import { onSetValues} from '../../common/helpers';
 
 
+
+    
 const params = history.getParams();
-const isEditMode = Boolean(params.Id);
+const isEditMode = Boolean(params.id);
 if (isEditMode) {
-getMovementsList(params.Id).then(apiMovements => {
-movementsLits = mapMovementsListApiToVm(apiMovements);
+getMovementsList(params.id).then(apiMovements => {
+const movementsList = mapMovementsListApiToVm(apiMovements);
 onSetValues(movementsList);
 });
 } else {
     getMovementsList().then((movementsList) => {
-    const vmMovementsList = mapMovementsListApiToVm(movementsList);
+    vmMovementsList = mapMovementsListApiToVm(movementsList);
     addMovementRows(vmMovementsList);
     setEvents(vmMovementsList);
   });
        
 }
-
-

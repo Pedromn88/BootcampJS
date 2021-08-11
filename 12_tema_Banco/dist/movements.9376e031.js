@@ -4204,16 +4204,16 @@ var _helpers = require("../../common/helpers");
 
 var params = _router.history.getParams();
 
-var isEditMode = Boolean(params.Id);
+var isEditMode = Boolean(params.id);
 
 if (isEditMode) {
-  (0, _movements.getMovementsList)(params.Id).then(function (apiMovements) {
-    movementsLits = (0, _movements3.mapMovementsListApiToVm)(apiMovements);
+  (0, _movements.getMovementsList)(params.id).then(function (apiMovements) {
+    var movementsList = (0, _movements3.mapMovementsListApiToVm)(apiMovements);
     (0, _helpers.onSetValues)(movementsList);
   });
 } else {
   (0, _movements.getMovementsList)().then(function (movementsList) {
-    var vmMovementsList = (0, _movements3.mapMovementsListApiToVm)(movementsList);
+    vmMovementsList = (0, _movements3.mapMovementsListApiToVm)(movementsList);
     (0, _movements2.addMovementRows)(vmMovementsList);
     setEvents(vmMovementsList);
   });
@@ -4246,7 +4246,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55821" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63710" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
