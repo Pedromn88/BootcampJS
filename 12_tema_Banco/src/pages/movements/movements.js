@@ -13,11 +13,11 @@ movementsLits = mapMovementsListApiToVm(apiMovements);
 onSetValues(movementsList);
 });
 } else {
-    getMovementsList().then(movementsList => {
-        const vmMovementsList = mapMovementsListApiToVm(movementsList);
-        addMovementRows(vmMovementsList);
-       setEvents(vmMovementsList);
-       });
+    getMovementsList().then((movementsList) => {
+    const vmMovementsList = mapMovementsListApiToVm(movementsList);
+    addMovementRows(vmMovementsList);
+    setEvents(vmMovementsList);
+  });
        
 }
 
