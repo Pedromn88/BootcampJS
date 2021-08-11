@@ -4204,20 +4204,20 @@ var _helpers = require("../../common/helpers");
 
 var params = _router.history.getParams();
 
-var isEditMode = Boolean(params.AccountId);
+var isEditMode = Boolean(params.Id);
 
 if (isEditMode) {
-  (0, _movements.getMovementsList)(params.AccountId).then(function (apiMovements) {
-    movementsLits = mapMovementsApiToVm(apiMovements);
+  (0, _movements.getMovementsList)(params.Id).then(function (apiMovements) {
+    movementsLits = (0, _movements3.mapMovementsListApiToVm)(apiMovements);
     (0, _helpers.onSetValues)(movementsList);
   });
+} else {
+  (0, _movements.getMovementsList)().then(function (movementsList) {
+    var vmMovementsList = (0, _movements3.mapMovementsListApiToVm)(movementsList);
+    (0, _movements2.addMovementRows)(vmMovementsList);
+    setEvents(vmMovementsList);
+  });
 }
-
-(0, _movements.getMovementsList)().then(function (movementsList) {
-  var vmMovementsList = (0, _movements3.mapMovementsListApiToVm)(movementsList);
-  (0, _movements2.addMovementRows)(vmMovementsList);
-  setEvents(vmMovementsList);
-});
 },{"./movements.api":"pages/movements/movements.api.js","./movements.helpers":"pages/movements/movements.helpers.js","./movements.mappers":"pages/movements/movements.mappers.js","../../core/router":"core/router/index.js","../../common/helpers":"common/helpers/index.js"}],"../node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -4246,7 +4246,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59113" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55821" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

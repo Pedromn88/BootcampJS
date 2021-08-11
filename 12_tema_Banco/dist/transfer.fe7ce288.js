@@ -117,9 +117,185 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"pages/transfer/transfer.js":[function(require,module,exports) {
+})({"common/helpers/element.helpers.js":[function(require,module,exports) {
+"use strict";
 
-},{}],"../node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.onSetValues = exports.onSetFormErrors = exports.onSetError = exports.onSubmitForm = exports.onUpdateField = void 0;
+
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+var onUpdateField = function onUpdateField(id, callback) {
+  var element = document.getElementById(id);
+
+  element.oninput = function (event) {
+    return callback(event);
+  };
+
+  if (element.type !== 'checkbox') {
+    element.onblur = function (event) {
+      return callback(event);
+    };
+  }
+};
+
+exports.onUpdateField = onUpdateField;
+
+var onSubmitForm = function onSubmitForm(id, callback) {
+  var element = document.getElementById(id);
+
+  element.onclick = function (e) {
+    e.preventDefault();
+    callback();
+  };
+};
+
+exports.onSubmitForm = onSubmitForm;
+
+var onSetError = function onSetError(id, error) {
+  if (error.succeeded) {
+    removeElementClass(id);
+    setErrorMessage(id, '');
+  } else {
+    setElementClass(id);
+    setErrorMessage(id, error.message);
+  }
+};
+
+exports.onSetError = onSetError;
+
+var setElementClass = function setElementClass(id) {
+  var element = document.getElementById(id);
+
+  if (element) {
+    element.classList.add('error');
+  }
+};
+
+var removeElementClass = function removeElementClass(id) {
+  var element = document.getElementById(id);
+
+  if (element) {
+    element.classList.remove('error');
+  }
+};
+
+var setErrorMessage = function setErrorMessage(id, message) {
+  var messageElement = document.getElementById("".concat(id, "-error"));
+
+  if (messageElement) {
+    messageElement.textContent = message;
+  }
+};
+
+var onSetFormErrors = function onSetFormErrors(_ref) {
+  var fieldErrors = _ref.fieldErrors;
+  Object.entries(fieldErrors).forEach(function (_ref2) {
+    var _ref3 = _slicedToArray(_ref2, 2),
+        key = _ref3[0],
+        value = _ref3[1];
+
+    onSetError(key, value);
+  });
+};
+
+exports.onSetFormErrors = onSetFormErrors;
+
+var setValue = function setValue(element, value) {
+  var elementType = element.tagName.toLowerCase();
+
+  if (elementType === 'select' || elementType === 'input') {
+    element.value = value;
+  } else {
+    element.textContent = value;
+  }
+};
+
+var onSetValue = function onSetValue(id, value) {
+  var element = document.getElementById(id);
+  console.log({
+    element: element
+  });
+
+  if (element) {
+    setValue(element, value);
+  }
+};
+
+var onSetValues = function onSetValues(values) {
+  Object.entries(values).forEach(function (_ref4) {
+    var _ref5 = _slicedToArray(_ref4, 2),
+        key = _ref5[0],
+        value = _ref5[1];
+
+    return onSetValue(key, value);
+  });
+};
+
+exports.onSetValues = onSetValues;
+},{}],"common/helpers/index.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _element = require("./element.helpers");
+
+Object.keys(_element).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  if (key in exports && exports[key] === _element[key]) return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function () {
+      return _element[key];
+    }
+  });
+});
+},{"./element.helpers":"common/helpers/element.helpers.js"}],"pages/transfer/transfer.js":[function(require,module,exports) {
+"use strict";
+
+var _helpers = require("../../common/helpers");
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+(0, _helpers.onUpdateField)('select-account', function (event) {
+  var value = event.target.value;
+  account = _objectSpread(_objectSpread({}, account), {}, {
+    type: value
+  });
+  formValidation.validateField('select-account', account.type).then(function (result) {
+    (0, _helpers.onSetError)('select-account', result);
+  });
+});
+(0, _helpers.onSubmitForm)('transfer-button', function () {
+  formValidation.validateForm(account).then(function (result) {
+    (0, _helpers.onSetFormErrors)(result);
+
+    if (result.succeeded) {
+      onSave().then(function () {
+        history.back();
+      });
+    }
+  });
+});
+},{"../../common/helpers":"common/helpers/index.js"}],"../node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -147,7 +323,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59113" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55821" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

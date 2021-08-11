@@ -6,19 +6,19 @@ import { onSetValues} from '../../common/helpers';
 
 
 const params = history.getParams();
-const isEditMode = Boolean(params.AccountId);
+const isEditMode = Boolean(params.Id);
 if (isEditMode) {
-getMovementsList(params.AccountId).then(apiMovements => {
-movementsLits = mapMovementsApiToVm(apiMovements);
+getMovementsList(params.Id).then(apiMovements => {
+movementsLits = mapMovementsListApiToVm(apiMovements);
 onSetValues(movementsList);
 });
+} else {
+    getMovementsList().then(movementsList => {
+        const vmMovementsList = mapMovementsListApiToVm(movementsList);
+        addMovementRows(vmMovementsList);
+       setEvents(vmMovementsList);
+       });
+       
 }
-
-
-getMovementsList().then(movementsList => {
- const vmMovementsList = mapMovementsListApiToVm(movementsList);
- addMovementRows(vmMovementsList);
-setEvents(vmMovementsList);
-});
 
 
