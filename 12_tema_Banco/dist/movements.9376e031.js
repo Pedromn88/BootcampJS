@@ -4213,7 +4213,7 @@ if (isEditMode) {
   });
 } else {
   (0, _movements.getMovementsList)().then(function (movementsList) {
-    vmMovementsList = (0, _movements3.mapMovementsListApiToVm)(movementsList);
+    var vmMovementsList = (0, _movements3.mapMovementsListApiToVm)(movementsList);
     (0, _movements2.addMovementRows)(vmMovementsList);
     setEvents(vmMovementsList);
   });
@@ -4246,7 +4246,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63710" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54446" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

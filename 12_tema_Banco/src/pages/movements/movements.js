@@ -5,7 +5,6 @@ import { history } from '../../core/router';
 import { onSetValues} from '../../common/helpers';
 
 
-
     
 const params = history.getParams();
 const isEditMode = Boolean(params.id);
@@ -16,7 +15,7 @@ onSetValues(movementsList);
 });
 } else {
     getMovementsList().then((movementsList) => {
-    vmMovementsList = mapMovementsListApiToVm(movementsList);
+    const vmMovementsList = mapMovementsListApiToVm(movementsList);
     addMovementRows(vmMovementsList);
     setEvents(vmMovementsList);
   });
