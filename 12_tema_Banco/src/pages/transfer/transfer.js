@@ -1,12 +1,14 @@
-import { onUpdateField, onSubmitForm, onSetError, onSetFormErrors, onSetValues } from '../../common/helpers';
-import {setAccountOptions} from './transfer.helpers'
+import { onUpdateField, onSubmitForm, onSetError, onSetFormErrors } from '../../common/helpers';
+import { setAccountOptions } from './transfer.helpers'
 import { history } from '../../core/router';
-import { getTransferList, insertTransfer } from './transfer.api';
-import { createFormValidation } from '@lemoncode/fonk';
+import { insertTransfer, getAccountList } from './transfer.api';
+import { fromValidation } from './transfer.validations';
 
+const params = history.getParams();
 
-let transfer = {
-    select: '',
+let transferForm = {
+    id: '',
+    accountId: '',
     iban: '',
     name: '',
     concept: '',
@@ -18,35 +20,26 @@ let transfer = {
     email:''
 }
 
-
-const params = history.getParams()
-const isEditMOde = Boolean (params.id)
-
-if(isEditMOde) {
-    getAccountList().then(accounts => {
-        setAccountOptions(accounts, params.id)
-        transfer = { ...transfer, sourceAccount: params.id};
-        
-    })
-} else {
-    getAccountList().then(accounts => {
-        setAccountOptions(accounts);
-        transfer = { ...transfer, sourceAccount: '1'};
-    })
-}
+getAccountList().then(apiListAccount =>{
+    setAccountOptions(apiListAccount, params.id);
+    transferForm.accountId = params.id;
+})
 
 onUpdateField('select-account', event =>{
-setAccountOptions(accounts);
-transfer = { ...transfer, sourceAccount: value};
+const value = event.target.value;
+transferFrom = { ...transferFrom, accountId: value};
 });
 
+formValidation.validateField('accountId', transfer.iban).then(result =>{
+    onSetError('accountId', result);
+})
 
 onUpdateField('iban', event => {
     const value = event.target.value;
     transfer = { ...transfer, notes: value}
 });
 
-FormValidation.validateField('iban', transfer.iban).then(result =>{
+formValidation.validateField('iban', transfer.iban).then(result =>{
     onSetError('iban', result);
 })
 
@@ -74,27 +67,43 @@ onUpdateField('notes', event => {
 
 
 
-onUpdateField('iban', event => {
-    const value = event.target.value;
-    transfer = { ...transfer, notes: value}
-});
-
-FormValidation.validateField('iban', transfer.iban).then(result =>{
-    onSetError('iban', result);
-})
-
-
-
-
 onUpdateField('day', event => {
-    const value = event.target.value;
-    transfer = { ...transfer, day: value, }
+    const value = parseInt(event.target.value);
+    transfer = { ...transfer, day: value, date: `${transfer.year}-${transfer.month}-${value}` }
 });
 
-FormValidation.validateField('day', transfer.iemail).then(result =>{
+formValidation.validateField('day', transfer.email).then(result =>{
     onSetError('day', result);
 })
 
+
+onUpdateField('month', event => {
+    const value = parseInt(event.target.value);
+    transfer = { ...transfer, month: value, date: `${transfer.year}-${value}-${transfer.day}`}
+});
+
+formValidation.validateField('month', transfer.email).then(result =>{
+    onSetError('month', result);
+})
+
+
+onUpdateField('year', event => {
+    const value = parseInt(event.target.value);
+    transfer = { ...transfer, year: value, date: `${value}-${transfer.month}-${transfer.day}` }
+});
+
+formValidation.validateField('year', transfer.email).then(result =>{
+    onSetError('year', result);
+})
+
+onUpdateField('date', event => {
+    const value = parseInt(event.target.value);
+    transfer = { ...transfer, month: value}
+});
+
+formValidation.validateField('date', transfer.email).then(result =>{
+    onSetError('date', result);
+})
 
 
 onUpdateField('email', event => {
@@ -102,36 +111,20 @@ onUpdateField('email', event => {
     transfer = { ...transfer, notes: value}
 });
 
-FormValidation.validateField('email', transfer.iemail).then(result =>{
+formValidation.validateField('email', transfer.email).then(result =>{
     onSetError('email', result);
 })
 
+const onSave = () => {
+    return insertTransfer(transferForm)
+}
 
-
-
-
-/*const updateDate = () => {
-    const newDate = [transfer.day, transfer.month, transfer.year].join('-')
-    console.log(newDate)
-    transfer = { ...transfer, date: newDate};
-
-    FormValidation.validateField('date', trnasfer.date).then(result =>{
-        console.log(result);
-    });
-}*/
-
-onSubmitForm('transfer-button', () =>{
-    //updateDate();
-    FormValidation.validateForm(transfer).then(result => {
+onSubmitForm('transfer-button', event =>{
+    fromValidation.validateForm(transferFrom).then(result => {
         onSetFormErrors(result);
-
-        console.log(result);
-        console.log(transfer);
-
-        const apiTransfer = mapAccountVmtoApi(transfer);
-        console.log(apiTransfer);
         if (result.succeeded){
-            insertTransfer(transfer).then(() => {history.back() })
-        }
+            onSave().then(result => {
+                history.back(); });
+        };
     });
-})
+});

@@ -4122,7 +4122,7 @@ module.exports = require('./lib/axios');
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.insertTransfer = void 0;
+exports.getAccountList = exports.insertTransfer = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -4131,15 +4131,22 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var url = "".concat("http://localhost:3000/api", "/transfer");
 
 var insertTransfer = function insertTransfer(transfer) {
-  return _axios.default.post(url, {
-    transfer: transfer
-  }).then(function (_ref) {
+  return _axios.default.post(url, transfer).then(function (_ref) {
     var data = _ref.data;
     return data;
   });
 };
 
 exports.insertTransfer = insertTransfer;
+var urlAccountList = "".concat("http://localhost:3000/api", "/account-list");
+
+var getAccountList = function getAccountList() {
+  return _axios.default.get(urlAccountList).then(function (response) {
+    return response.data;
+  });
+};
+
+exports.getAccountList = getAccountList;
 },{"axios":"../node_modules/axios/index.js"}],"../node_modules/@lemoncode/fonk/dist/@lemoncode/fonk.esm.js":[function(require,module,exports) {
 var global = arguments[3];
 "use strict";
@@ -5997,7 +6004,553 @@ var index = {
   array: array
 };
 exports.Validators = index;
-},{}],"pages/transfer/transfer.js":[function(require,module,exports) {
+},{}],"pages/transfer/transfer.custom.validators.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.yearValidator = exports.monthValidator = exports.dayValidator = void 0;
+
+var dayValidator = function dayValidator(_ref) {
+  var value = _ref.value;
+  var sucedded = parseInt(value) > 0 && parseInt(value) < 31;
+  return {
+    sucedded: sucedded,
+    message: succeeded ? '' : 'Introduce un día que sea correcto',
+    type: ''
+  };
+};
+
+exports.dayValidator = dayValidator;
+
+var monthValidator = function monthValidator(_ref2) {
+  var value = _ref2.value;
+  var sucedded = parseInt(value) > 0 && parseInt(value) < 12;
+  return {
+    sucedded: sucedded,
+    message: succeeded ? '' : 'Introduce un mes que sea correcto',
+    type: ''
+  };
+};
+
+exports.monthValidator = monthValidator;
+
+var yearValidator = function yearValidator(_ref3) {
+  var value = _ref3.value;
+  var sucedded = parseInt(value) > 2020;
+  return {
+    sucedded: sucedded,
+    message: succeeded ? '' : 'Introduce un año que sea correcto',
+    type: ''
+  };
+};
+
+exports.yearValidator = yearValidator;
+},{}],"../node_modules/@lemoncode/fonk-iban-validator/dist/@lemoncode/fonk-iban-validator.esm.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.iban = void 0;
+
+var sanitizeValue = function sanitizeValue(value) {
+  return value.replace(/\s/g, '').toUpperCase();
+};
+
+var ibanPattern = /^[a-zA-Z]{2}[a-zA-Z0-9]*$/;
+
+var hasIbanPattern = function hasIbanPattern(value) {
+  return ibanPattern.test(value);
+};
+
+var getCountry = function getCountry(value) {
+  return value.substring(0, 2);
+};
+
+var getIBANLengthByCountry = function getIBANLengthByCountry(value) {
+  switch (value) {
+    case 'AD':
+      return 24;
+
+    case 'AE':
+      return 23;
+
+    case 'AL':
+      return 28;
+
+    case 'AO':
+      return 25;
+
+    case 'AT':
+      return 20;
+
+    case 'AZ':
+      return 28;
+
+    case 'BA':
+      return 20;
+
+    case 'BE':
+      return 16;
+
+    case 'BF':
+      return 27;
+
+    case 'BG':
+      return 22;
+
+    case 'BH':
+      return 22;
+
+    case 'BI':
+      return 16;
+
+    case 'BJ':
+      return 28;
+
+    case 'BR':
+      return 29;
+
+    case 'BY':
+      return 28;
+
+    case 'CH':
+      return 21;
+
+    case 'CI':
+      return 28;
+
+    case 'CM':
+      return 27;
+
+    case 'CR':
+      return 22;
+
+    case 'CV':
+      return 25;
+
+    case 'CY':
+      return 28;
+
+    case 'CZ':
+      return 24;
+
+    case 'DE':
+      return 22;
+
+    case 'DK':
+      return 18;
+
+    case 'DO':
+      return 28;
+
+    case 'DZ':
+      return 24;
+
+    case 'EE':
+      return 20;
+
+    case 'ES':
+      return 24;
+
+    case 'FI':
+      return 18;
+
+    case 'FO':
+      return 18;
+
+    case 'FR':
+      return 27;
+
+    case 'GB':
+      return 22;
+
+    case 'GE':
+      return 22;
+
+    case 'GI':
+      return 23;
+
+    case 'GL':
+      return 18;
+
+    case 'GR':
+      return 27;
+
+    case 'GT':
+      return 28;
+
+    case 'HR':
+      return 21;
+
+    case 'HU':
+      return 28;
+
+    case 'IE':
+      return 22;
+
+    case 'IL':
+      return 23;
+
+    case 'IQ':
+      return 23;
+
+    case 'IS':
+      return 26;
+
+    case 'IR':
+      return 26;
+
+    case 'IT':
+      return 27;
+
+    case 'JO':
+      return 30;
+
+    case 'KW':
+      return 30;
+
+    case 'KZ':
+      return 20;
+
+    case 'LB':
+      return 28;
+
+    case 'LC':
+      return 32;
+
+    case 'LI':
+      return 21;
+
+    case 'LT':
+      return 20;
+
+    case 'LU':
+      return 20;
+
+    case 'LV':
+      return 21;
+
+    case 'MC':
+      return 27;
+
+    case 'MD':
+      return 24;
+
+    case 'ME':
+      return 22;
+
+    case 'MG':
+      return 27;
+
+    case 'MK':
+      return 19;
+
+    case 'ML':
+      return 28;
+
+    case 'MR':
+      return 27;
+
+    case 'MT':
+      return 31;
+
+    case 'MU':
+      return 30;
+
+    case 'MZ':
+      return 25;
+
+    case 'NL':
+      return 18;
+
+    case 'NO':
+      return 15;
+
+    case 'PK':
+      return 24;
+
+    case 'PL':
+      return 28;
+
+    case 'PS':
+      return 29;
+
+    case 'PT':
+      return 25;
+
+    case 'QA':
+      return 29;
+
+    case 'RO':
+      return 24;
+
+    case 'RS':
+      return 22;
+
+    case 'SA':
+      return 24;
+
+    case 'SC':
+      return 31;
+
+    case 'SE':
+      return 24;
+
+    case 'SI':
+      return 19;
+
+    case 'SK':
+      return 24;
+
+    case 'SM':
+      return 27;
+
+    case 'SN':
+      return 28;
+
+    case 'ST':
+      return 25;
+
+    case 'SV':
+      return 28;
+
+    case 'TN':
+      return 24;
+
+    case 'TL':
+      return 23;
+
+    case 'TR':
+      return 26;
+
+    case 'UA':
+      return 29;
+
+    case 'VG':
+      return 24;
+
+    case 'XK':
+      return 20;
+
+    default:
+      return 0;
+  }
+};
+
+var hasValidLength = function hasValidLength(value) {
+  var country = getCountry(value);
+  var ibanLength = getIBANLengthByCountry(country);
+  return ibanLength !== 0 && value.length === ibanLength;
+};
+
+var moveControlCodeToEnd = function moveControlCodeToEnd(value) {
+  return "".concat(value.substring(4, value.length)).concat(value.substring(0, 4));
+};
+
+var parseToNumber = function parseToNumber(_char) {
+  return (_char.charCodeAt(0) - 55).toString();
+};
+
+var parseIBANToNumbers = function parseIBANToNumbers(value) {
+  return value.split('').reduce(function (result, _char2) {
+    return !isNaN(Number(_char2)) ? "".concat(result).concat(_char2) : "".concat(result).concat(parseToNumber(_char2));
+  }, '');
+};
+
+var calculateReminder = function calculateReminder(input) {
+  var value = input;
+
+  while (value.length >= 9) {
+    var partial = value.substring(0, 9);
+    var rest = value.substring(9);
+    var num = Number(partial) % 97;
+    value = "".concat(num).concat(rest);
+  }
+
+  return Number(value) % 97;
+};
+
+var isValidIBAN = function isValidIBAN(value) {
+  var rearrangedIBAN = moveControlCodeToEnd(value);
+  var ibanNumber = parseIBANToNumbers(rearrangedIBAN);
+  var remainder = calculateReminder(ibanNumber);
+  return remainder === 1;
+};
+
+var VALIDATOR_TYPE = 'IBAN';
+var defaultMessage = 'Invalid IBAN';
+
+var setErrorMessage = function setErrorMessage(message) {
+  return defaultMessage = message;
+};
+
+var isDefined = function isDefined(value) {
+  return value !== void 0 && value !== null && value !== '';
+};
+
+var validate = function validate(value) {
+  var sanitizedValue = sanitizeValue(value);
+  return hasIbanPattern(sanitizedValue) && hasValidLength(sanitizedValue) && isValidIBAN(sanitizedValue);
+};
+
+var validateType = function validateType(value) {
+  return typeof value === 'string';
+};
+
+var validator = function validator(fieldValidatorArgs) {
+  var value = fieldValidatorArgs.value,
+      _fieldValidatorArgs$m = fieldValidatorArgs.message,
+      message = _fieldValidatorArgs$m === void 0 ? defaultMessage : _fieldValidatorArgs$m;
+  var succeeded = !isDefined(value) || validateType(value) && validate(value);
+  return {
+    succeeded: succeeded,
+    message: succeeded ? '' : message,
+    type: VALIDATOR_TYPE
+  };
+};
+
+var validator$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  setErrorMessage: setErrorMessage,
+  validator: validator
+});
+exports.iban = validator$1;
+},{}],"../node_modules/@lemoncode/fonk-positive-number-validator/dist/@lemoncode/fonk-positive-number-validator.esm.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.positiveNumber = void 0;
+
+var _fonk = require("@lemoncode/fonk");
+
+var VALIDATOR_TYPE = 'POSITIVE_NUMBER';
+var defaultMessage = 'The value must be a positive number';
+
+var setErrorMessage = function setErrorMessage(message) {
+  return defaultMessage = message;
+};
+
+var defaultCustomArgs = {
+  strictTypes: false,
+  allowZero: true
+};
+
+var setCustomArgs = function setCustomArgs(customArgs) {
+  return defaultCustomArgs = Object.assign(Object.assign({}, defaultCustomArgs), customArgs);
+};
+
+var validateType = function validateType(value, args) {
+  return !args.strictTypes || typeof value === 'number';
+};
+
+var validate = function validate(value, args) {
+  return !isNaN(Number(value)) && (args.allowZero ? value >= 0 : value > 0);
+};
+
+var isDefined = function isDefined(value) {
+  return value !== void 0 && value !== null && value !== '';
+};
+
+var validator = function validator(fieldValidatorArgs) {
+  var value = fieldValidatorArgs.value,
+      _fieldValidatorArgs$m = fieldValidatorArgs.message,
+      message = _fieldValidatorArgs$m === void 0 ? defaultMessage : _fieldValidatorArgs$m,
+      _fieldValidatorArgs$c = fieldValidatorArgs.customArgs,
+      customArgs = _fieldValidatorArgs$c === void 0 ? defaultCustomArgs : _fieldValidatorArgs$c;
+  var args = Object.assign(Object.assign({}, defaultCustomArgs), customArgs);
+  var succeeded = !isDefined(value) || validateType(value, args) && validate(value, args);
+  return {
+    succeeded: succeeded,
+    message: succeeded ? '' : (0, _fonk.parseMessageWithCustomArgs)(message, args),
+    type: VALIDATOR_TYPE
+  };
+};
+
+var validator$1 = /*#__PURE__*/Object.freeze({
+  __proto__: null,
+  setErrorMessage: setErrorMessage,
+  setCustomArgs: setCustomArgs,
+  validator: validator
+});
+exports.positiveNumber = validator$1;
+},{"@lemoncode/fonk":"../node_modules/@lemoncode/fonk/dist/@lemoncode/fonk.esm.js"}],"pages/transfer/transfer.validations.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.fromValidation = void 0;
+
+var _fonk = require("@lemoncode/fonk");
+
+var _transferCustom = require("./transfer.custom.validators");
+
+var _fonkIbanValidator = require("@lemoncode/fonk-iban-validator");
+
+var _fonkPositiveNumberValidator = require("@lemoncode/fonk-positive-number-validator");
+
+var validationSchema = {
+  field: {
+    accountId: [{
+      validator: _fonk.Validators.required
+    }],
+    iban: [{
+      validator: _fonkIbanValidator.iban.validator,
+      message: 'IBAN inválido'
+    }, {
+      validator: _fonk.Validators.required,
+      message: 'Campo requerido'
+    }],
+    name: [{
+      validator: _fonk.Validators.required,
+      message: 'Campo requerido'
+    }],
+    amount: [{
+      validator: _fonkPositiveNumberValidator.positiveNumber.validator,
+      customArgs: {
+        allowZero: true
+      }
+    }, {
+      validator: _fonk.Validators.required,
+      message: 'Campo Requerido'
+    }],
+    concepto: [{
+      validator: _fonk.Validators.required,
+      message: 'Campo requerido'
+    }],
+    day: [{
+      validator: _fonk.Validators.required,
+      message: 'Campo requerido'
+    }, {
+      validator: _transferCustom.dayValidator,
+      message: 'Inserta un día válido'
+    }],
+    month: [{
+      validator: _fonk.Validators.required,
+      message: 'Campo requerido'
+    }, {
+      validator: _transferCustom.monthValidator.required
+    }],
+    year: [{
+      validator: _fonk.Validators.required,
+      message: 'Campo requerido'
+    }, {
+      validator: _transferCustom.yearValidator.required
+    }],
+    email: [{
+      validator: _fonk.Validators.email,
+      message: 'Email no válido'
+    }]
+  }
+};
+var fromValidation = (0, _fonk.createFormValidation)(validationSchema);
+exports.fromValidation = fromValidation;
+},{"@lemoncode/fonk":"../node_modules/@lemoncode/fonk/dist/@lemoncode/fonk.esm.js","./transfer.custom.validators":"pages/transfer/transfer.custom.validators.js","@lemoncode/fonk-iban-validator":"../node_modules/@lemoncode/fonk-iban-validator/dist/@lemoncode/fonk-iban-validator.esm.js","@lemoncode/fonk-positive-number-validator":"../node_modules/@lemoncode/fonk-positive-number-validator/dist/@lemoncode/fonk-positive-number-validator.esm.js"}],"pages/transfer/transfer.js":[function(require,module,exports) {
 "use strict";
 
 var _helpers = require("../../common/helpers");
@@ -6008,7 +6561,7 @@ var _router = require("../../core/router");
 
 var _transfer2 = require("./transfer.api");
 
-var _fonk = require("@lemoncode/fonk");
+var _transfer3 = require("./transfer.validations");
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
 
@@ -6016,8 +6569,11 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-var transfer = {
-  select: '',
+var params = _router.history.getParams();
+
+var transferForm = {
+  id: '',
+  accountId: '',
   iban: '',
   name: '',
   concept: '',
@@ -6028,32 +6584,18 @@ var transfer = {
   date: '',
   email: ''
 };
-
-var params = _router.history.getParams();
-
-var isEditMOde = Boolean(params.id);
-
-if (isEditMOde) {
-  getAccountList().then(function (accounts) {
-    (0, _transfer.setAccountOptions)(accounts, params.id);
-    transfer = _objectSpread(_objectSpread({}, transfer), {}, {
-      sourceAccount: params.id
-    });
-  });
-} else {
-  getAccountList().then(function (accounts) {
-    (0, _transfer.setAccountOptions)(accounts);
-    transfer = _objectSpread(_objectSpread({}, transfer), {}, {
-      sourceAccount: '1'
-    });
-  });
-}
-
+(0, _transfer2.getAccountList)().then(function (apiListAccount) {
+  (0, _transfer.setAccountOptions)(apiListAccount, params.id);
+  transferForm.accountId = params.id;
+});
 (0, _helpers.onUpdateField)('select-account', function (event) {
-  (0, _transfer.setAccountOptions)(accounts);
-  transfer = _objectSpread(_objectSpread({}, transfer), {}, {
-    sourceAccount: value
+  var value = event.target.value;
+  transferFrom = _objectSpread(_objectSpread({}, transferFrom), {}, {
+    accountId: value
   });
+});
+formValidation.validateField('accountId', transfer.iban).then(function (result) {
+  (0, _helpers.onSetError)('accountId', result);
 });
 (0, _helpers.onUpdateField)('iban', function (event) {
   var value = event.target.value;
@@ -6061,7 +6603,7 @@ if (isEditMOde) {
     notes: value
   });
 });
-FormValidation.validateField('iban', transfer.iban).then(function (result) {
+formValidation.validateField('iban', transfer.iban).then(function (result) {
   (0, _helpers.onSetError)('iban', result);
 });
 (0, _helpers.onUpdateField)('name', function (event) {
@@ -6088,23 +6630,44 @@ FormValidation.validateField('iban', transfer.iban).then(function (result) {
     notes: value
   });
 });
-(0, _helpers.onUpdateField)('iban', function (event) {
-  var value = event.target.value;
-  transfer = _objectSpread(_objectSpread({}, transfer), {}, {
-    notes: value
-  });
-});
-FormValidation.validateField('iban', transfer.iban).then(function (result) {
-  (0, _helpers.onSetError)('iban', result);
-});
 (0, _helpers.onUpdateField)('day', function (event) {
-  var value = event.target.value;
+  var value = parseInt(event.target.value);
   transfer = _objectSpread(_objectSpread({}, transfer), {}, {
-    day: value
+    day: value,
+    date: "".concat(transfer.year, "-").concat(transfer.month, "-").concat(value)
   });
 });
-FormValidation.validateField('day', transfer.iemail).then(function (result) {
+formValidation.validateField('day', transfer.email).then(function (result) {
   (0, _helpers.onSetError)('day', result);
+});
+(0, _helpers.onUpdateField)('month', function (event) {
+  var value = parseInt(event.target.value);
+  transfer = _objectSpread(_objectSpread({}, transfer), {}, {
+    month: value,
+    date: "".concat(transfer.year, "-").concat(value, "-").concat(transfer.day)
+  });
+});
+formValidation.validateField('month', transfer.email).then(function (result) {
+  (0, _helpers.onSetError)('month', result);
+});
+(0, _helpers.onUpdateField)('year', function (event) {
+  var value = parseInt(event.target.value);
+  transfer = _objectSpread(_objectSpread({}, transfer), {}, {
+    year: value,
+    date: "".concat(value, "-").concat(transfer.month, "-").concat(transfer.day)
+  });
+});
+formValidation.validateField('year', transfer.email).then(function (result) {
+  (0, _helpers.onSetError)('year', result);
+});
+(0, _helpers.onUpdateField)('date', function (event) {
+  var value = parseInt(event.target.value);
+  transfer = _objectSpread(_objectSpread({}, transfer), {}, {
+    month: value
+  });
+});
+formValidation.validateField('date', transfer.email).then(function (result) {
+  (0, _helpers.onSetError)('date', result);
 });
 (0, _helpers.onUpdateField)('email', function (event) {
   var value = event.target.value;
@@ -6112,36 +6675,28 @@ FormValidation.validateField('day', transfer.iemail).then(function (result) {
     notes: value
   });
 });
-FormValidation.validateField('email', transfer.iemail).then(function (result) {
+formValidation.validateField('email', transfer.email).then(function (result) {
   (0, _helpers.onSetError)('email', result);
 });
-/*const updateDate = () => {
-    const newDate = [transfer.day, transfer.month, transfer.year].join('-')
-    console.log(newDate)
-    transfer = { ...transfer, date: newDate};
 
-    FormValidation.validateField('date', trnasfer.date).then(result =>{
-        console.log(result);
-    });
-}*/
+var onSave = function onSave() {
+  return (0, _transfer2.insertTransfer)(transferForm);
+};
 
-(0, _helpers.onSubmitForm)('transfer-button', function () {
-  //updateDate();
-  FormValidation.validateForm(transfer).then(function (result) {
+(0, _helpers.onSubmitForm)('transfer-button', function (event) {
+  _transfer3.fromValidation.validateForm(transferFrom).then(function (result) {
     (0, _helpers.onSetFormErrors)(result);
-    console.log(result);
-    console.log(transfer);
-    var apiTransfer = mapAccountVmtoApi(transfer);
-    console.log(apiTransfer);
 
     if (result.succeeded) {
-      (0, _transfer2.insertTransfer)(transfer).then(function () {
+      onSave().then(function (result) {
         _router.history.back();
       });
     }
+
+    ;
   });
 });
-},{"../../common/helpers":"common/helpers/index.js","./transfer.helpers":"pages/transfer/transfer.helpers.js","../../core/router":"core/router/index.js","./transfer.api":"pages/transfer/transfer.api.js","@lemoncode/fonk":"../node_modules/@lemoncode/fonk/dist/@lemoncode/fonk.esm.js"}],"../node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"../../common/helpers":"common/helpers/index.js","./transfer.helpers":"pages/transfer/transfer.helpers.js","../../core/router":"core/router/index.js","./transfer.api":"pages/transfer/transfer.api.js","./transfer.validations":"pages/transfer/transfer.validations.js"}],"../node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -6169,7 +6724,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54446" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58500" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
