@@ -29,9 +29,9 @@ onUpdateField('select-account', event =>{
 const value = event.target.value;
 transfer = { ...transfer, accountId: value};
 
-formValidation.validateField('accountId', transfer.iban).then(result =>{
+/*fromValidation.validateField('accountId', transfer.iban).then(result =>{
     onSetError('accountId', result);
-})
+})*/
 });
 
 
@@ -40,7 +40,7 @@ onUpdateField('iban', event => {
     transfer = { ...transfer, notes: value}
 
 
-formValidation.validateField('iban', transfer.iban).then(result =>{
+fromValidation.validateField('iban', transfer.iban).then(result =>{
     onSetError('iban', result);
 })
 
@@ -74,7 +74,7 @@ onUpdateField('day', event => {
     transfer = { ...transfer, day: value, date: `${transfer.year}-${transfer.month}-${value}` }
 
 
-formValidation.validateField('day', transfer.email).then(result =>{
+fromValidation.validateField('day', transfer.day).then(result =>{
     onSetError('day', result);
 })
 });
@@ -83,7 +83,7 @@ onUpdateField('month', event => {
     const value = parseInt(event.target.value);
     transfer = { ...transfer, month: value, date: `${transfer.year}-${value}-${transfer.day}`}
 
-formValidation.validateField('month', transfer.email).then(result =>{
+fromValidation.validateField('month', transfer.month).then(result =>{
     onSetError('month', result);
 })
 
@@ -94,7 +94,7 @@ onUpdateField('year', event => {
     transfer = { ...transfer, year: value, date: `${value}-${transfer.month}-${transfer.day}` }
 
 
-formValidation.validateField('year', transfer.email).then(result =>{
+fromValidation.validateField('year', transfer.day).then(result =>{
     onSetError('year', result);
 })
 
@@ -104,7 +104,7 @@ onUpdateField('email', event => {
     transfer = { ...transfer, notes: value}
 
 
-formValidation.validateField('email', transfer.email).then(result =>{
+fromValidation.validateField('email', transfer.email).then(result =>{
     onSetError('email', result);
 })
 

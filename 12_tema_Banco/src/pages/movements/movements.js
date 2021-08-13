@@ -16,7 +16,13 @@ onSetValues(movementsList);
 addMovementRows(movementsList)
 getAccountList().then((accountList) => {
   const vmAccountList = mapAccountListApiToVm(accountList);
-  onSetValues('iban', vmAccountList);
+  console.log(vmAccountList)
+  onSetValues(vmAccountList);
+});
+getAccountList().then((accountList) => {
+  const vmAccountList = mapAccountListApiToVm(accountList);
+  console.log(vmAccountList)
+  onSetValues(vmAccountList);
 });
 
 });
@@ -29,7 +35,8 @@ getAccountList().then((accountList) => {
     
     getAccountList().then((accountList) => {
       const vmAccountList = mapAccountListApiToVm(accountList);
-      onSetValues('iban', vmAccountList);
+      onSetValues(vmAccountList);
+     console.log(vmAccountList)
     });
 }
 

@@ -6014,9 +6014,9 @@ exports.yearValidator = exports.monthValidator = exports.dayValidator = void 0;
 
 var dayValidator = function dayValidator(_ref) {
   var value = _ref.value;
-  var sucedded = parseInt(value) > 0 && parseInt(value) < 31;
+  var succeeded = parseInt(value) > 0 && parseInt(value) < 31;
   return {
-    sucedded: sucedded,
+    succeeded: succeeded,
     message: succeeded ? '' : 'Introduce un día que sea correcto',
     type: ''
   };
@@ -6026,9 +6026,9 @@ exports.dayValidator = dayValidator;
 
 var monthValidator = function monthValidator(_ref2) {
   var value = _ref2.value;
-  var sucedded = parseInt(value) > 0 && parseInt(value) < 12;
+  var succeeded = parseInt(value) > 0 && parseInt(value) < 12;
   return {
-    sucedded: sucedded,
+    succeeded: succeeded,
     message: succeeded ? '' : 'Introduce un mes que sea correcto',
     type: ''
   };
@@ -6038,9 +6038,9 @@ exports.monthValidator = monthValidator;
 
 var yearValidator = function yearValidator(_ref3) {
   var value = _ref3.value;
-  var sucedded = parseInt(value) > 2020;
+  var succeeded = parseInt(value) > 2020;
   return {
-    sucedded: sucedded,
+    succeeded: succeeded,
     message: succeeded ? '' : 'Introduce un año que sea correcto',
     type: ''
   };
@@ -6523,31 +6523,27 @@ var validationSchema = {
       validator: _fonk.Validators.required,
       message: 'Campo requerido'
     }],
-
-    /*  day:[{
-        validator: Validators.required,
-        message: 'Campo requerido',
-      },
-      { validator: dayValidator,
-        message: 'Inserta un día válido',
-      },
-    ],
-    month:[{
-      validator: Validators.required,
-      message: 'Campo requerido',
-    },
-    { validator: monthValidator.required,
-      
-    }
-    ],
-    year:[{
-    validator: Validators.required,
-    message: 'Campo requerido',
-    },
-    { validator: yearValidator.required,
-    
-    }
-    ],*/
+    day: [{
+      validator: _fonk.Validators.required,
+      message: 'Campo requerido'
+    }, {
+      validator: _transferCustom.dayValidator,
+      message: 'Inserta un día válido'
+    }],
+    month: [{
+      validator: _fonk.Validators.required,
+      message: 'Campo requerido'
+    }, {
+      validator: _transferCustom.monthValidator,
+      message: 'Campo requerido'
+    }],
+    year: [{
+      validator: _fonk.Validators.required,
+      message: 'Campo requerido'
+    }, {
+      validator: _transferCustom.yearValidator,
+      message: 'Campo requerido'
+    }],
     email: [{
       validator: _fonk.Validators.email,
       message: 'Email no válido'
@@ -6599,16 +6595,17 @@ var transfer = {
   transfer = _objectSpread(_objectSpread({}, transfer), {}, {
     accountId: value
   });
-  formValidation.validateField('accountId', transfer.iban).then(function (result) {
-    (0, _helpers.onSetError)('accountId', result);
-  });
+  /*fromValidation.validateField('accountId', transfer.iban).then(result =>{
+      onSetError('accountId', result);
+  })*/
 });
 (0, _helpers.onUpdateField)('iban', function (event) {
   var value = event.target.value;
   transfer = _objectSpread(_objectSpread({}, transfer), {}, {
     notes: value
   });
-  formValidation.validateField('iban', transfer.iban).then(function (result) {
+
+  _transfer3.fromValidation.validateField('iban', transfer.iban).then(function (result) {
     (0, _helpers.onSetError)('iban', result);
   });
 });
@@ -6642,7 +6639,8 @@ var transfer = {
     day: value,
     date: "".concat(transfer.year, "-").concat(transfer.month, "-").concat(value)
   });
-  formValidation.validateField('day', transfer.email).then(function (result) {
+
+  _transfer3.fromValidation.validateField('day', transfer.day).then(function (result) {
     (0, _helpers.onSetError)('day', result);
   });
 });
@@ -6652,7 +6650,8 @@ var transfer = {
     month: value,
     date: "".concat(transfer.year, "-").concat(value, "-").concat(transfer.day)
   });
-  formValidation.validateField('month', transfer.email).then(function (result) {
+
+  _transfer3.fromValidation.validateField('month', transfer.month).then(function (result) {
     (0, _helpers.onSetError)('month', result);
   });
 });
@@ -6662,7 +6661,8 @@ var transfer = {
     year: value,
     date: "".concat(value, "-").concat(transfer.month, "-").concat(transfer.day)
   });
-  formValidation.validateField('year', transfer.email).then(function (result) {
+
+  _transfer3.fromValidation.validateField('year', transfer.day).then(function (result) {
     (0, _helpers.onSetError)('year', result);
   });
 });
@@ -6671,7 +6671,8 @@ var transfer = {
   transfer = _objectSpread(_objectSpread({}, transfer), {}, {
     notes: value
   });
-  formValidation.validateField('email', transfer.email).then(function (result) {
+
+  _transfer3.fromValidation.validateField('email', transfer.email).then(function (result) {
     (0, _helpers.onSetError)('email', result);
   });
 });
@@ -6721,7 +6722,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63701" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50668" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

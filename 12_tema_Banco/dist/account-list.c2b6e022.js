@@ -4041,10 +4041,14 @@ exports.mapAccountListApiToVm = mapAccountListApiToVm;
 var mapAccountApiToVm = function mapAccountApiToVm(account) {
   return {
     id: account.id,
-    iban: account.iban,
+
+    /*iban: account.iban,
     name: account.name,
+    balance: `${account.balance} €`,
+    lastTransaction: new Date(account.lastTransaction).toLocaleDateString(),*/
+    alias: "".concat(account.name),
     balance: "".concat(account.balance, " \u20AC"),
-    lastTransaction: new Date(account.lastTransaction).toLocaleDateString()
+    iban: account.iban
   };
 };
 },{}],"common/helpers/element.helpers.js":[function(require,module,exports) {
@@ -4250,7 +4254,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63701" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50668" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

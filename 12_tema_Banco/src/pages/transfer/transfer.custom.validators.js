@@ -1,8 +1,8 @@
 export const dayValidator =({ value }) => {
-    const sucedded = parseInt (value) > 0 && parseInt(value) < 31;
+    const succeeded = parseInt (value) > 0 && parseInt(value) < 31;
 
     return {
-        sucedded,
+        succeeded,
         message: succeeded
         ? ''
         :'Introduce un día que sea correcto',
@@ -12,10 +12,10 @@ export const dayValidator =({ value }) => {
 
 
 export const monthValidator =({ value }) => {
-    const sucedded = parseInt (value) > 0 && parseInt(value) < 12;
+    const succeeded = parseInt (value) > 0 && parseInt(value) < 12;
 
     return {
-        sucedded,
+        succeeded,
         message: succeeded
         ? ''
         :'Introduce un mes que sea correcto',
@@ -24,10 +24,10 @@ export const monthValidator =({ value }) => {
 }
 
 export const yearValidator =({ value }) => {
-    const sucedded = parseInt (value) > 2020;
+    const succeeded = parseInt (value) > 2020;
 
     return {
-        sucedded,
+        succeeded,
         message: succeeded
         ? ''
         :'Introduce un año que sea correcto',

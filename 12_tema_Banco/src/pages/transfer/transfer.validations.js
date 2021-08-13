@@ -36,7 +36,7 @@ const validationSchema = {
           }],
 
          
-        /*  day:[{
+        day:[{
             validator: Validators.required,
             message: 'Campo requerido',
           },
@@ -44,24 +44,24 @@ const validationSchema = {
             message: 'Inserta un día válido',
           },
         ],
-        month:[{
+        month:[
+          {
+            validator: Validators.required,
+            message: 'Campo requerido',
+          },
+        { validator: monthValidator,
+          message: 'Campo requerido',
+        }
+      ],
+      year:[
+        {
           validator: Validators.required,
           message: 'Campo requerido',
         },
-        { validator: monthValidator.required,
-          
-        }
-      ],
-      year:[{
-        validator: Validators.required,
-        message: 'Campo requerido',
-      },
-      { validator: yearValidator.required,
-        
+      { validator: yearValidator,
+        message: 'Campo requerido'
       }
-    ],*/
-
-
+    ],
 
     email: [{
       validator: Validators.email,

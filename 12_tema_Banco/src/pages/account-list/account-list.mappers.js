@@ -4,8 +4,11 @@ export const mapAccountListApiToVm = accountList =>
  : [];
 const mapAccountApiToVm = account => ({
  id: account.id,
- iban: account.iban,
+ /*iban: account.iban,
  name: account.name,
  balance: `${account.balance} €`,
- lastTransaction: new Date(account.lastTransaction).toLocaleDateString(),
+ lastTransaction: new Date(account.lastTransaction).toLocaleDateString(),*/
+ alias: `${account.name}`,
+        balance: `${account.balance} €`,
+        iban: account.iban,
 });

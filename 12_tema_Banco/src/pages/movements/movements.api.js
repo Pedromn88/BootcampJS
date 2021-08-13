@@ -9,7 +9,4 @@ const urlAccountList = `${process.env.BASE_API_URL}/account-list`;
 
 export const getAccountList = id => Axios.get(urlAccountList, {params: { id: id}}).then(({ data }) => data);
 
-const urlIbanList = `${process.env.BASE_API_URL}/account-list`;
-
-export const getIbanList = id => Axios.get(urlIbanList, {params: { iban: id}}).then(({ data }) => data);
 

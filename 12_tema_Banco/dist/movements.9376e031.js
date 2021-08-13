@@ -1886,7 +1886,7 @@ module.exports = require('./lib/axios');
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getIbanList = exports.getAccountList = exports.getMovementsList = void 0;
+exports.getAccountList = exports.getMovementsList = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -1920,20 +1920,6 @@ var getAccountList = function getAccountList(id) {
 };
 
 exports.getAccountList = getAccountList;
-var urlIbanList = "".concat("http://localhost:3000/api", "/account-list");
-
-var getIbanList = function getIbanList(id) {
-  return _axios.default.get(urlIbanList, {
-    params: {
-      iban: id
-    }
-  }).then(function (_ref3) {
-    var data = _ref3.data;
-    return data;
-  });
-};
-
-exports.getIbanList = getIbanList;
 },{"axios":"../node_modules/axios/index.js"}],"pages/movements/movements.helpers.js":[function(require,module,exports) {
 "use strict";
 
@@ -4236,10 +4222,14 @@ exports.mapAccountListApiToVm = mapAccountListApiToVm;
 var mapAccountApiToVm = function mapAccountApiToVm(account) {
   return {
     id: account.id,
-    iban: account.iban,
+
+    /*iban: account.iban,
     name: account.name,
+    balance: `${account.balance} €`,
+    lastTransaction: new Date(account.lastTransaction).toLocaleDateString(),*/
+    alias: "".concat(account.name),
     balance: "".concat(account.balance, " \u20AC"),
-    lastTransaction: new Date(account.lastTransaction).toLocaleDateString()
+    iban: account.iban
   };
 };
 },{}],"pages/movements/movements.js":[function(require,module,exports) {
@@ -4268,7 +4258,13 @@ if (isEditMode) {
     (0, _movements2.addMovementRows)(movementsList);
     (0, _movements.getAccountList)().then(function (accountList) {
       var vmAccountList = (0, _accountList.mapAccountListApiToVm)(accountList);
-      (0, _helpers.onSetValues)('iban', vmAccountList);
+      console.log(vmAccountList);
+      (0, _helpers.onSetValues)(vmAccountList);
+    });
+    (0, _movements.getAccountList)().then(function (accountList) {
+      var vmAccountList = (0, _accountList.mapAccountListApiToVm)(accountList);
+      console.log(vmAccountList);
+      (0, _helpers.onSetValues)(vmAccountList);
     });
   });
 } else {
@@ -4279,7 +4275,8 @@ if (isEditMode) {
   });
   (0, _movements.getAccountList)().then(function (accountList) {
     var vmAccountList = (0, _accountList.mapAccountListApiToVm)(accountList);
-    (0, _helpers.onSetValues)('iban', vmAccountList);
+    (0, _helpers.onSetValues)(vmAccountList);
+    console.log(vmAccountList);
   });
 }
 },{"./movements.api":"pages/movements/movements.api.js","./movements.helpers":"pages/movements/movements.helpers.js","./movements.mappers":"pages/movements/movements.mappers.js","../../core/router":"core/router/index.js","../../common/helpers":"common/helpers/index.js","../account-list/account-list.mappers":"pages/account-list/account-list.mappers.js"}],"../node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
@@ -4310,7 +4307,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63701" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50668" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
