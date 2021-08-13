@@ -6523,25 +6523,31 @@ var validationSchema = {
       validator: _fonk.Validators.required,
       message: 'Campo requerido'
     }],
-    day: [{
-      validator: _fonk.Validators.required,
-      message: 'Campo requerido'
-    }, {
-      validator: _transferCustom.dayValidator,
-      message: 'Inserta un día válido'
-    }],
-    month: [{
-      validator: _fonk.Validators.required,
-      message: 'Campo requerido'
-    }, {
-      validator: _transferCustom.monthValidator.required
-    }],
-    year: [{
-      validator: _fonk.Validators.required,
-      message: 'Campo requerido'
-    }, {
-      validator: _transferCustom.yearValidator.required
-    }],
+
+    /*  day:[{
+        validator: Validators.required,
+        message: 'Campo requerido',
+      },
+      { validator: dayValidator,
+        message: 'Inserta un día válido',
+      },
+    ],
+    month:[{
+      validator: Validators.required,
+      message: 'Campo requerido',
+    },
+    { validator: monthValidator.required,
+      
+    }
+    ],
+    year:[{
+    validator: Validators.required,
+    message: 'Campo requerido',
+    },
+    { validator: yearValidator.required,
+    
+    }
+    ],*/
     email: [{
       validator: _fonk.Validators.email,
       message: 'Email no válido'
@@ -6571,7 +6577,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 var params = _router.history.getParams();
 
-var transferForm = {
+var transfer = {
   id: '',
   accountId: '',
   iban: '',
@@ -6586,25 +6592,25 @@ var transferForm = {
 };
 (0, _transfer2.getAccountList)().then(function (apiListAccount) {
   (0, _transfer.setAccountOptions)(apiListAccount, params.id);
-  transferForm.accountId = params.id;
+  transfer.accountId = params.id;
 });
 (0, _helpers.onUpdateField)('select-account', function (event) {
   var value = event.target.value;
-  transferFrom = _objectSpread(_objectSpread({}, transferFrom), {}, {
+  transfer = _objectSpread(_objectSpread({}, transfer), {}, {
     accountId: value
   });
-});
-formValidation.validateField('accountId', transfer.iban).then(function (result) {
-  (0, _helpers.onSetError)('accountId', result);
+  formValidation.validateField('accountId', transfer.iban).then(function (result) {
+    (0, _helpers.onSetError)('accountId', result);
+  });
 });
 (0, _helpers.onUpdateField)('iban', function (event) {
   var value = event.target.value;
   transfer = _objectSpread(_objectSpread({}, transfer), {}, {
     notes: value
   });
-});
-formValidation.validateField('iban', transfer.iban).then(function (result) {
-  (0, _helpers.onSetError)('iban', result);
+  formValidation.validateField('iban', transfer.iban).then(function (result) {
+    (0, _helpers.onSetError)('iban', result);
+  });
 });
 (0, _helpers.onUpdateField)('name', function (event) {
   var value = event.target.value;
@@ -6636,9 +6642,9 @@ formValidation.validateField('iban', transfer.iban).then(function (result) {
     day: value,
     date: "".concat(transfer.year, "-").concat(transfer.month, "-").concat(value)
   });
-});
-formValidation.validateField('day', transfer.email).then(function (result) {
-  (0, _helpers.onSetError)('day', result);
+  formValidation.validateField('day', transfer.email).then(function (result) {
+    (0, _helpers.onSetError)('day', result);
+  });
 });
 (0, _helpers.onUpdateField)('month', function (event) {
   var value = parseInt(event.target.value);
@@ -6646,9 +6652,9 @@ formValidation.validateField('day', transfer.email).then(function (result) {
     month: value,
     date: "".concat(transfer.year, "-").concat(value, "-").concat(transfer.day)
   });
-});
-formValidation.validateField('month', transfer.email).then(function (result) {
-  (0, _helpers.onSetError)('month', result);
+  formValidation.validateField('month', transfer.email).then(function (result) {
+    (0, _helpers.onSetError)('month', result);
+  });
 });
 (0, _helpers.onUpdateField)('year', function (event) {
   var value = parseInt(event.target.value);
@@ -6656,35 +6662,26 @@ formValidation.validateField('month', transfer.email).then(function (result) {
     year: value,
     date: "".concat(value, "-").concat(transfer.month, "-").concat(transfer.day)
   });
-});
-formValidation.validateField('year', transfer.email).then(function (result) {
-  (0, _helpers.onSetError)('year', result);
-});
-(0, _helpers.onUpdateField)('date', function (event) {
-  var value = parseInt(event.target.value);
-  transfer = _objectSpread(_objectSpread({}, transfer), {}, {
-    month: value
+  formValidation.validateField('year', transfer.email).then(function (result) {
+    (0, _helpers.onSetError)('year', result);
   });
-});
-formValidation.validateField('date', transfer.email).then(function (result) {
-  (0, _helpers.onSetError)('date', result);
 });
 (0, _helpers.onUpdateField)('email', function (event) {
   var value = event.target.value;
   transfer = _objectSpread(_objectSpread({}, transfer), {}, {
     notes: value
   });
-});
-formValidation.validateField('email', transfer.email).then(function (result) {
-  (0, _helpers.onSetError)('email', result);
+  formValidation.validateField('email', transfer.email).then(function (result) {
+    (0, _helpers.onSetError)('email', result);
+  });
 });
 
 var onSave = function onSave() {
-  return (0, _transfer2.insertTransfer)(transferForm);
+  return (0, _transfer2.insertTransfer)(transfer);
 };
 
 (0, _helpers.onSubmitForm)('transfer-button', function (event) {
-  _transfer3.fromValidation.validateForm(transferFrom).then(function (result) {
+  _transfer3.fromValidation.validateForm(transfer).then(function (result) {
     (0, _helpers.onSetFormErrors)(result);
 
     if (result.succeeded) {
@@ -6724,7 +6721,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58500" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63701" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

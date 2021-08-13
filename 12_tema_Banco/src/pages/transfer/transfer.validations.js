@@ -36,7 +36,7 @@ const validationSchema = {
           }],
 
          
-          day:[{
+        /*  day:[{
             validator: Validators.required,
             message: 'Campo requerido',
           },
@@ -59,7 +59,7 @@ const validationSchema = {
       { validator: yearValidator.required,
         
       }
-    ],
+    ],*/
 
 
 

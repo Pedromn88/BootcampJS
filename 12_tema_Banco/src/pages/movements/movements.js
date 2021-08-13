@@ -1,9 +1,10 @@
 
-import { getMovementsList } from './movements.api';
+import { getMovementsList, getAccountList } from './movements.api';
 import { addMovementRows } from './movements.helpers';
 import { mapMovementsListApiToVm } from './movements.mappers';
 import { history } from '../../core/router';
 import { onSetValues} from '../../common/helpers';
+import { mapAccountListApiToVm } from '../account-list/account-list.mappers'
 
   
 const params = history.getParams();
@@ -13,18 +14,24 @@ getMovementsList(params.id).then(apiMovements => {
 const movementsList = mapMovementsListApiToVm(apiMovements);
 onSetValues(movementsList);
 addMovementRows(movementsList)
+getAccountList().then((accountList) => {
+  const vmAccountList = mapAccountListApiToVm(accountList);
+  onSetValues('iban', vmAccountList);
+});
+
 });
 } else {
     getMovementsList().then((movementsList) => {
     const vmMovementsList = mapMovementsListApiToVm(movementsList);
     addMovementRows(vmMovementsList);
     setEvents(vmMovementsList);
-  });
-       
+    });
+    
+    getAccountList().then((accountList) => {
+      const vmAccountList = mapAccountListApiToVm(accountList);
+      onSetValues('iban', vmAccountList);
+    });
 }
-
-
-
 
 
 
