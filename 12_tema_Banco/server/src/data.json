@@ -23,14 +23,6 @@
       "name": "Ahorro",
       "balance": 8500,
       "lastTransaction": "2019-11-15T08:29:04"
-    },
-    {
-      "iban": "XK94 5002 0730 9001 0040",
-      "name": "Prueba",
-      "type": "1",
-      "balance": 0,
-      "lastTransaction": "2021-07-17T20:47:32.211Z",
-      "id": "Nh3pLYQ"
     }
   ],
   "movements": [
@@ -116,5 +108,7 @@
       "accountId": "3"
     }
   ],
-  "transfer": []
+  "transfer": [
+
+  ]
 }

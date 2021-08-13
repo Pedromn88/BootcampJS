@@ -29,15 +29,12 @@ onUpdateField('select-account', event =>{
 const value = event.target.value;
 transfer = { ...transfer, accountId: value};
 
-/*fromValidation.validateField('accountId', transfer.iban).then(result =>{
-    onSetError('accountId', result);
-})*/
 });
 
 
 onUpdateField('iban', event => {
     const value = event.target.value;
-    transfer = { ...transfer, notes: value}
+    transfer = { ...transfer, iban: value}
 
 
 fromValidation.validateField('iban', transfer.iban).then(result =>{
@@ -47,7 +44,7 @@ fromValidation.validateField('iban', transfer.iban).then(result =>{
 });
 onUpdateField('name', event => {
     const value = event.target.value;
-    transfer = { ...transfer, notes: value}
+    transfer = { ...transfer, name: value}
 });
 
 
@@ -59,6 +56,10 @@ onUpdateField('concept', event => {
 onUpdateField('amount', event => {
     const value = event.target.value;
     transfer = { ...transfer, amount: value}
+
+    fromValidation.validateField('amount', transfer.amount).then(result =>{
+        onSetError('amount', result);
+    })
 });
 
 
@@ -101,7 +102,7 @@ fromValidation.validateField('year', transfer.day).then(result =>{
 });
 onUpdateField('email', event => {
     const value = event.target.value;
-    transfer = { ...transfer, notes: value}
+    transfer = { ...transfer, email: value}
 
 
 fromValidation.validateField('email', transfer.email).then(result =>{
@@ -118,7 +119,8 @@ onSubmitForm('transfer-button', event =>{
         onSetFormErrors(result);
         if (result.succeeded){
             onSave().then(result => {
-                history.back(); });
+                history.back(); 
+            });
         };
     });
 });

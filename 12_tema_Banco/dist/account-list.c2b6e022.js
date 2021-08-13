@@ -4041,14 +4041,10 @@ exports.mapAccountListApiToVm = mapAccountListApiToVm;
 var mapAccountApiToVm = function mapAccountApiToVm(account) {
   return {
     id: account.id,
-
-    /*iban: account.iban,
+    iban: account.iban,
     name: account.name,
-    balance: `${account.balance} €`,
-    lastTransaction: new Date(account.lastTransaction).toLocaleDateString(),*/
-    alias: "".concat(account.name),
     balance: "".concat(account.balance, " \u20AC"),
-    iban: account.iban
+    lastTransaction: new Date(account.lastTransaction).toLocaleDateString()
   };
 };
 },{}],"common/helpers/element.helpers.js":[function(require,module,exports) {

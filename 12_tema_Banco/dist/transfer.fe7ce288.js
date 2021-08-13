@@ -6496,30 +6496,38 @@ var _fonkPositiveNumberValidator = require("@lemoncode/fonk-positive-number-vali
 
 var validationSchema = {
   field: {
+    /*iba: [Validators.required , iban.validator],
+    name: [Validators.required],
+    amount: [Validators.required, positiveNumber.validator],
+    concept: [Validators.required],
+    day: [Validators.required, dayValidator],
+    month: [Validators.required, monthValidator],
+    year: [Validators.required, yearValidator],
+    email: [Validators.email]*/
     accountId: [{
       validator: _fonk.Validators.required
     }],
     iban: [{
-      validator: _fonkIbanValidator.iban.validator,
-      message: 'IBAN inválido'
-    }, {
       validator: _fonk.Validators.required,
       message: 'Campo requerido'
+    }, {
+      validator: _fonkIbanValidator.iban.validator,
+      message: 'IBAN inválido'
     }],
     name: [{
       validator: _fonk.Validators.required,
       message: 'Campo requerido'
     }],
     amount: [{
+      validator: _fonk.Validators.required,
+      message: 'Campo Requerido'
+    }, {
       validator: _fonkPositiveNumberValidator.positiveNumber.validator,
       customArgs: {
         allowZero: true
       }
-    }, {
-      validator: _fonk.Validators.required,
-      message: 'Campo Requerido'
     }],
-    concepto: [{
+    concept: [{
       validator: _fonk.Validators.required,
       message: 'Campo requerido'
     }],
@@ -6528,21 +6536,21 @@ var validationSchema = {
       message: 'Campo requerido'
     }, {
       validator: _transferCustom.dayValidator,
-      message: 'Inserta un día válido'
+      message: 'Fecha errónea'
     }],
     month: [{
       validator: _fonk.Validators.required,
       message: 'Campo requerido'
     }, {
       validator: _transferCustom.monthValidator,
-      message: 'Campo requerido'
+      message: 'Fecha errónea'
     }],
     year: [{
       validator: _fonk.Validators.required,
       message: 'Campo requerido'
     }, {
       validator: _transferCustom.yearValidator,
-      message: 'Campo requerido'
+      message: 'Fecha errónea'
     }],
     email: [{
       validator: _fonk.Validators.email,
@@ -6595,14 +6603,11 @@ var transfer = {
   transfer = _objectSpread(_objectSpread({}, transfer), {}, {
     accountId: value
   });
-  /*fromValidation.validateField('accountId', transfer.iban).then(result =>{
-      onSetError('accountId', result);
-  })*/
 });
 (0, _helpers.onUpdateField)('iban', function (event) {
   var value = event.target.value;
   transfer = _objectSpread(_objectSpread({}, transfer), {}, {
-    notes: value
+    iban: value
   });
 
   _transfer3.fromValidation.validateField('iban', transfer.iban).then(function (result) {
@@ -6612,7 +6617,7 @@ var transfer = {
 (0, _helpers.onUpdateField)('name', function (event) {
   var value = event.target.value;
   transfer = _objectSpread(_objectSpread({}, transfer), {}, {
-    notes: value
+    name: value
   });
 });
 (0, _helpers.onUpdateField)('concept', function (event) {
@@ -6625,6 +6630,10 @@ var transfer = {
   var value = event.target.value;
   transfer = _objectSpread(_objectSpread({}, transfer), {}, {
     amount: value
+  });
+
+  _transfer3.fromValidation.validateField('amount', transfer.amount).then(function (result) {
+    (0, _helpers.onSetError)('amount', result);
   });
 });
 (0, _helpers.onUpdateField)('notes', function (event) {
@@ -6669,7 +6678,7 @@ var transfer = {
 (0, _helpers.onUpdateField)('email', function (event) {
   var value = event.target.value;
   transfer = _objectSpread(_objectSpread({}, transfer), {}, {
-    notes: value
+    email: value
   });
 
   _transfer3.fromValidation.validateField('email', transfer.email).then(function (result) {

@@ -6,31 +6,44 @@ import {positiveNumber} from '@lemoncode/fonk-positive-number-validator'
 
 const validationSchema = {
     field: {
+
+      /*iba: [Validators.required , iban.validator],
+      name: [Validators.required],
+      amount: [Validators.required, positiveNumber.validator],
+      concept: [Validators.required],
+      day: [Validators.required, dayValidator],
+      month: [Validators.required, monthValidator],
+      year: [Validators.required, yearValidator],
+      email: [Validators.email]*/
+      
       accountId: [{
         validator: Validators.required,
         }],
       iban: [
         {
+        validator: Validators.required,
+        message: 'Campo requerido'},
+        {
           validator: iban.validator,
           message: 'IBAN inválido',
-        },{
-        validator: Validators.required,
-        message: 'Campo requerido',}
+        },
       ],
       name: [{
         validator: Validators.required,
         message: 'Campo requerido',
         }],
       amount: [
+        {
+            validator: Validators.required,
+            message: 'Campo Requerido'
+          },
           {
             validator: positiveNumber.validator,
             customArgs: { allowZero: true },
           },
-          {
-            validator: Validators.required,
-            message: 'Campo Requerido',}
+          
         ],
-        concepto: [{
+        concept: [{
           validator: Validators.required,
           message: 'Campo requerido',
           }],
@@ -41,7 +54,7 @@ const validationSchema = {
             message: 'Campo requerido',
           },
           { validator: dayValidator,
-            message: 'Inserta un día válido',
+            message: 'Fecha errónea',
           },
         ],
         month:[
@@ -50,7 +63,7 @@ const validationSchema = {
             message: 'Campo requerido',
           },
         { validator: monthValidator,
-          message: 'Campo requerido',
+          message: 'Fecha errónea',
         }
       ],
       year:[
@@ -59,7 +72,7 @@ const validationSchema = {
           message: 'Campo requerido',
         },
       { validator: yearValidator,
-        message: 'Campo requerido'
+        message: 'Fecha errónea'
       }
     ],
 
