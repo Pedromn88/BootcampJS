@@ -6031,7 +6031,8 @@ exports.mapAccountVmToApi = mapAccountVmToApi;
 
 var mapAccountApiToVm = function mapAccountApiToVm(account) {
   return _objectSpread(_objectSpread({}, account), {}, {
-    alias: account.name
+    alias: account.name,
+    balance: "".concat(account.balance, " \u20AC")
   });
 };
 
@@ -6136,7 +6137,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50668" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59717" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

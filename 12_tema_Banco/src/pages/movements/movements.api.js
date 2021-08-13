@@ -7,6 +7,7 @@ export const getMovementsList = id => Axios.get(url, {params: { accountId: id}})
 
 const urlAccountList = `${process.env.BASE_API_URL}/account-list`;
 
-export const getAccountList = id => Axios.get(urlAccountList, {params: { id: id}}).then(({ data }) => data);
+export const getAccountList = (id) =>
+  Axios.get(`${urlAccountList}/${id}`).then((response) => response.data);
 
 

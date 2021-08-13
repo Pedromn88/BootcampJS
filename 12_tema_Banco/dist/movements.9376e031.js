@@ -1909,13 +1909,8 @@ exports.getMovementsList = getMovementsList;
 var urlAccountList = "".concat("http://localhost:3000/api", "/account-list");
 
 var getAccountList = function getAccountList(id) {
-  return _axios.default.get(urlAccountList, {
-    params: {
-      id: id
-    }
-  }).then(function (_ref2) {
-    var data = _ref2.data;
-    return data;
+  return _axios.default.get("".concat(urlAccountList, "/").concat(id)).then(function (response) {
+    return response.data;
   });
 };
 
@@ -4203,35 +4198,36 @@ Object.keys(_element).forEach(function (key) {
     }
   });
 });
-},{"./element.helpers":"common/helpers/element.helpers.js"}],"pages/account-list/account-list.mappers.js":[function(require,module,exports) {
+},{"./element.helpers":"common/helpers/element.helpers.js"}],"pages/account/account.mappers.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.mapAccountListApiToVm = void 0;
+exports.mapAccountApiToVm = exports.mapAccountVmToApi = void 0;
 
-var mapAccountListApiToVm = function mapAccountListApiToVm(accountList) {
-  return Array.isArray(accountList) ? accountList.map(function (account) {
-    return mapAccountApiToVm(account);
-  }) : [];
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) { symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); } keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var mapAccountVmToApi = function mapAccountVmToApi(account) {
+  return _objectSpread(_objectSpread({}, account), {}, {
+    name: account.alias
+  });
 };
 
-exports.mapAccountListApiToVm = mapAccountListApiToVm;
+exports.mapAccountVmToApi = mapAccountVmToApi;
 
 var mapAccountApiToVm = function mapAccountApiToVm(account) {
-  return {
-    id: account.id,
-
-    /*iban: account.iban,
-    name: account.name,
-    balance: `${account.balance} €`,
-    lastTransaction: new Date(account.lastTransaction).toLocaleDateString(),*/
-    alias: "".concat(account.name),
-    balance: "".concat(account.balance, " \u20AC"),
-    iban: account.iban
-  };
+  return _objectSpread(_objectSpread({}, account), {}, {
+    alias: account.name,
+    balance: "".concat(account.balance, " \u20AC")
+  });
 };
+
+exports.mapAccountApiToVm = mapAccountApiToVm;
 },{}],"pages/movements/movements.js":[function(require,module,exports) {
 "use strict";
 
@@ -4245,7 +4241,7 @@ var _router = require("../../core/router");
 
 var _helpers = require("../../common/helpers");
 
-var _accountList = require("../account-list/account-list.mappers");
+var _account = require("../account/account.mappers");
 
 var params = _router.history.getParams();
 
@@ -4256,13 +4252,8 @@ if (isEditMode) {
     var movementsList = (0, _movements3.mapMovementsListApiToVm)(apiMovements);
     (0, _helpers.onSetValues)(movementsList);
     (0, _movements2.addMovementRows)(movementsList);
-    (0, _movements.getAccountList)().then(function (accountList) {
-      var vmAccountList = (0, _accountList.mapAccountListApiToVm)(accountList);
-      console.log(vmAccountList);
-      (0, _helpers.onSetValues)(vmAccountList);
-    });
-    (0, _movements.getAccountList)().then(function (accountList) {
-      var vmAccountList = (0, _accountList.mapAccountListApiToVm)(accountList);
+    (0, _movements.getAccountList)(params.id).then(function (accountList) {
+      var vmAccountList = (0, _account.mapAccountApiToVm)(accountList);
       console.log(vmAccountList);
       (0, _helpers.onSetValues)(vmAccountList);
     });
@@ -4273,13 +4264,13 @@ if (isEditMode) {
     (0, _movements2.addMovementRows)(vmMovementsList);
     setEvents(vmMovementsList);
   });
-  (0, _movements.getAccountList)().then(function (accountList) {
-    var vmAccountList = (0, _accountList.mapAccountListApiToVm)(accountList);
+  (0, _movements.getAccountList)(params.id).then(function (accountList) {
+    var vmAccountList = (0, _account.mapAccountApiToVm)(accountList);
     (0, _helpers.onSetValues)(vmAccountList);
     console.log(vmAccountList);
   });
 }
-},{"./movements.api":"pages/movements/movements.api.js","./movements.helpers":"pages/movements/movements.helpers.js","./movements.mappers":"pages/movements/movements.mappers.js","../../core/router":"core/router/index.js","../../common/helpers":"common/helpers/index.js","../account-list/account-list.mappers":"pages/account-list/account-list.mappers.js"}],"../node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./movements.api":"pages/movements/movements.api.js","./movements.helpers":"pages/movements/movements.helpers.js","./movements.mappers":"pages/movements/movements.mappers.js","../../core/router":"core/router/index.js","../../common/helpers":"common/helpers/index.js","../account/account.mappers":"pages/account/account.mappers.js"}],"../node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -4307,7 +4298,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50668" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59717" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

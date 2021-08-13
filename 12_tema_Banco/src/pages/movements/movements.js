@@ -4,7 +4,7 @@ import { addMovementRows } from './movements.helpers';
 import { mapMovementsListApiToVm } from './movements.mappers';
 import { history } from '../../core/router';
 import { onSetValues} from '../../common/helpers';
-import { mapAccountListApiToVm } from '../account-list/account-list.mappers'
+import { mapAccountApiToVm } from '../account/account.mappers'
 
   
 const params = history.getParams();
@@ -14,16 +14,12 @@ getMovementsList(params.id).then(apiMovements => {
 const movementsList = mapMovementsListApiToVm(apiMovements);
 onSetValues(movementsList);
 addMovementRows(movementsList)
-getAccountList().then((accountList) => {
-  const vmAccountList = mapAccountListApiToVm(accountList);
+getAccountList(params.id).then((accountList) => {
+  const vmAccountList = mapAccountApiToVm(accountList);
   console.log(vmAccountList)
   onSetValues(vmAccountList);
 });
-getAccountList().then((accountList) => {
-  const vmAccountList = mapAccountListApiToVm(accountList);
-  console.log(vmAccountList)
-  onSetValues(vmAccountList);
-});
+
 
 });
 } else {
@@ -33,8 +29,8 @@ getAccountList().then((accountList) => {
     setEvents(vmMovementsList);
     });
     
-    getAccountList().then((accountList) => {
-      const vmAccountList = mapAccountListApiToVm(accountList);
+    getAccountList(params.id).then((accountList) => {
+      const vmAccountList = mapAccountApiToVm(accountList);
       onSetValues(vmAccountList);
      console.log(vmAccountList)
     });
