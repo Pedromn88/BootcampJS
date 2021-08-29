@@ -7,15 +7,6 @@ import {positiveNumber} from '@lemoncode/fonk-positive-number-validator'
 const validationSchema = {
     field: {
 
-      /*iba: [Validators.required , iban.validator],
-      name: [Validators.required],
-      amount: [Validators.required, positiveNumber.validator],
-      concept: [Validators.required],
-      day: [Validators.required, dayValidator],
-      month: [Validators.required, monthValidator],
-      year: [Validators.required, yearValidator],
-      email: [Validators.email]*/
-      
       accountId: [{
         validator: Validators.required,
         }],

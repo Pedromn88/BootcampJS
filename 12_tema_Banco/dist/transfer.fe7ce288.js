@@ -6496,14 +6496,6 @@ var _fonkPositiveNumberValidator = require("@lemoncode/fonk-positive-number-vali
 
 var validationSchema = {
   field: {
-    /*iba: [Validators.required , iban.validator],
-    name: [Validators.required],
-    amount: [Validators.required, positiveNumber.validator],
-    concept: [Validators.required],
-    day: [Validators.required, dayValidator],
-    month: [Validators.required, monthValidator],
-    year: [Validators.required, yearValidator],
-    email: [Validators.email]*/
     accountId: [{
       validator: _fonk.Validators.required
     }],
@@ -6731,7 +6723,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59717" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53799" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

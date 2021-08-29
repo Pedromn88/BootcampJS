@@ -1,29 +1,40 @@
 
-/*export const mapPropertyListApiToVm = propertyList =>
+
+export const mapPropertyListApiToVm = propertyList =>
 Array.isArray(propertyList)
 ? getPropertyList.map(property => mapPropertyApiToVm(property))
-: [];*/
+: [];
 
 
-export const mapPropertyApiToVm = (property, equipmentsList) => ({
+
+export const mapPropertyApiToVm = (property, equipmentList) => ({
     id: property.id,
-    mainImage: property.image[0],
+    mainImage: property.images[0],
     title: property.title,
-    city: property.city,
+    notes: property.notes, 
     rooms: `${property.rooms} ${getRoomWord(property.rooms)}`,
-    squareMeter: `${property.squareMeter}m2`,
+    squareMeter: `${property.squareMeter} m2`,
     rooms: `${property.bathrooms} ${getBathroomWord(property.bathrooms)}`,
     price: `${property.price.toLocaleString()} €`,
-    notes: property.notes, 
+    images: Array.isArray(property.images) ? property.images : [], 
+    address: property.address,
+    city: property.city,
     mainFeatures: property.mainFeatures,
-    equipments: getequipmentsName(property, equipmentsList),
-    locationURL: property.locationURL,
-    images: property.images,
-   
+    equipments: transfromEquipmentIds(property, equipmentList),
+    locationUrl: property.locationUrl,
+    
     });
 
     const getRoomWord = rooms => (rooms > 1 ? 'habitaciones' : 'habitación');
     const getBathroomWord = bathrooms => (bathrooms > 1 ? 'Baños' : 'baño');
-    const getequipmentsName = (equipmentsIds, equipmentsList) => {
-        return equipmentsIds.map(equipmentId => equipmentsList.find(equimentItem => equimentItem.id === equipmentId)).map(({name}) => name)
+    const transfromEquipmentIds = (property, equipmentList) => {
+        let transformado = '';
+        transformado = property.equipmentIds.map(function (obj){
+        const encontrado = equipmentList.find (element => element.id === obj)
+        return encontrado.name
+
+        });
+        return transformado
+
     }
+    
