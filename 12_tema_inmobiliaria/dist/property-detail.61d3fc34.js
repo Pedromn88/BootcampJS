@@ -2031,7 +2031,7 @@ module.exports = require('./lib/axios');
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.getContactList = exports.savedData = exports.getEquipments = exports.getDetail = void 0;
+exports.savedData = exports.getEquipments = exports.getDetail = void 0;
 
 var _axios = _interopRequireDefault(require("axios"));
 
@@ -2056,25 +2056,16 @@ var getEquipments = function getEquipments() {
 };
 
 exports.getEquipments = getEquipments;
+var urlContact = "".concat("http://localhost:3000/api", "/contact");
 
 var savedData = function savedData(askDetails) {
-  return _axios.default.post(url, askDetails).then(function (_ref2) {
+  return _axios.default.post(urlContact, askDetails).then(function (_ref2) {
     var data = _ref2.data;
     return data;
   });
 };
 
 exports.savedData = savedData;
-var urlContact = "".concat("http://localhost:3000/api", "/contact");
-
-var getContactList = function getContactList(contact) {
-  return _axios.default.post(urlContact, contact).then(function (_ref3) {
-    var data = _ref3.data;
-    return data;
-  });
-};
-
-exports.getContactList = getContactList;
 },{"axios":"../node_modules/axios/index.js"}],"pages/property-detail/property-detail.helpers.js":[function(require,module,exports) {
 "use strict";
 
@@ -4084,18 +4075,21 @@ exports.Validators = index;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.formValidation = void 0;
+exports.fromValidation = void 0;
 
 var _fonk = require("@lemoncode/fonk");
 
 var validationSchema = {
   field: {
-    email: [_fonk.Validators.required, _fonk.Validators.email],
+    email: [{
+      validator: _fonk.Validators.email,
+      message: 'Email no válido'
+    }],
     message: [_fonk.Validators.required]
   }
 };
-var formValidation = (0, _fonk.createFormValidation)(validationSchema);
-exports.formValidation = formValidation;
+var fromValidation = (0, _fonk.createFormValidation)(validationSchema);
+exports.fromValidation = fromValidation;
 },{"@lemoncode/fonk":"../node_modules/@lemoncode/fonk/dist/@lemoncode/fonk.esm.js"}],"core/router/routes.js":[function(require,module,exports) {
 "use strict";
 
@@ -6218,8 +6212,8 @@ Promise.all([(0, _propertyDetail.getDetail)(params.id), (0, _propertyDetail.getE
     email: value
   });
 
-  _propertyDetailValidations.formValidation.validateField('email', askDetails.email).then(function (result) {
-    onSetError('email', result);
+  _propertyDetailValidations.fromValidation.validateField('email', askDetails.email).then(function (result) {
+    (0, _element.onSetError)('email', result);
   });
 });
 (0, _element.onUpdateField)('message', function (event) {
@@ -6228,17 +6222,22 @@ Promise.all([(0, _propertyDetail.getDetail)(params.id), (0, _propertyDetail.getE
     message: value
   });
 });
-(0, _element.onSubmitForm)('contact-button', function () {
-  createFormValidation.validateForm(askDetails).then(function (result) {
+
+var onSave = function onSave() {
+  return (0, _propertyDetail.savedData)(askDetails);
+};
+
+(0, _element.onSubmitForm)('contact-button', function (event) {
+  _propertyDetailValidations.fromValidation.validateForm(askDetails).then(function (result) {
     (0, _element.onSetFormErrors)(result);
 
     if (result.succeeded) {
-      (0, _propertyDetail.savedData)(askDetails).then(function (isValid) {
-        console.log({
-          isValid: isValid
-        });
+      onSave().then(function (result) {
+        _router.history.back();
       });
     }
+
+    ;
   });
 });
 },{"../../common/helpers/element.helpers":"common/helpers/element.helpers.js","./property-detail.api":"pages/property-detail/property-detail.api.js","./property-detail.helpers":"pages/property-detail/property-detail.helpers.js","./property-detail.mappers":"pages/property-detail/property-detail.mappers.js","./property-detail-validations":"pages/property-detail/property-detail-validations.js","../../core/router":"core/router/index.js"}],"../node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
@@ -6269,7 +6268,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "55930" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58289" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

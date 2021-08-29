@@ -16,9 +16,11 @@ export const getEquipments = () => Axios.get(equiptmentsurl).then(response => {
     return response.data
 })
 
-export const savedData = askDetails => Axios.post(url, askDetails).then (({data})=> data);
+
+
+
 
 
 const urlContact = `${process.env.BASE_API_URL}/contact`;
 
-export const getContactList = contact => Axios.post(urlContact, contact).then(({ data }) => data);
+export const savedData = askDetails => Axios.post(urlContact, askDetails).then(({ data }) => data);
