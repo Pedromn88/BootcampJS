@@ -1,6 +1,6 @@
 import {onUpdateField, onSubmitForm, onSetError, onSetFormErrors, onAddFile} from '../../common/helpers';
 import {uploadProperty, getEquipments,getSaleTypeList, getProvinceList} from './upload-property.api'
-import {mapPropertyUploadApiToVm} from './upload-property-mappers'
+import {mapPropertyUpdateApiToVm} from './upload-property-mappers'
 import {onAddFeature, onAddImage, setOptionList, formatCheckboxId, onRemoveFeature, formatDeleteFeatureButtonId, setCheckboxList, addElement, removeElement } from './upload-property.helpers'
 import {fromValidation} from './upload-property-validator'
 import { history } from '../../core/router'
@@ -95,6 +95,12 @@ Promise.all([getSaleTypeList(), getProvinceList(), getEquipments()]).then(
             
          });
 
+         onUpdateField('saleTypes', event =>{
+            const value = event.target.value;
+            newProperty = { ...newProperty, saleTypes: value};
+            
+         });
+
          onUpdateField('address', event =>{
             const value = event.target.value;
             newProperty = { ...newProperty, address: value};
@@ -149,7 +155,7 @@ Promise.all([getSaleTypeList(), getProvinceList(), getEquipments()]).then(
 
    onAddFile('add-image', value => {
       onAddImage(value);
-      //newProperty = addElement(value, newProperty, 'add-image')
+   
       
    })
 

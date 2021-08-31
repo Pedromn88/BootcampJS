@@ -1,10 +1,10 @@
 export const mapPropertyUpdateListApiToVm = propertyList =>
 Array.isArray(propertyList)
-? getPropertyUpdateList.map(property => mapPropertyUpdateApiToVm(property))
+? getPropertyUpdateList.map(property => mapPropertyUploadApiToVm(property))
 : [];
 
 
-export const mapPropertyUpdateApiToVm = (property) => ({
+export const mapPropertyUploadApiToVm = (property) => ({
     title: property.title,
     notes: property.notes, 
     email: property.email,
