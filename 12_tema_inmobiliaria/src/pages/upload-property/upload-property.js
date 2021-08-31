@@ -1,9 +1,9 @@
-import {onUpdateField, onSubmitForm, removeElement, onSetError, onSetFormErrors, onAddFile} from '../../common/helpers';
+import {onUpdateField, onSubmitForm, onSetError, onSetFormErrors, onAddFile} from '../../common/helpers';
 import {uploadProperty, getEquipments,getSaleTypeList, getProvinceList} from './upload-property.api'
 import {mapPropertyUploadApiToVm} from './upload-property-mappers'
-import {onAddFeature, onAddImage, setOptionList, formatCheckboxId, onRemoveFeature, formatDeleteFeatureButtonId, setCheckboxList } from './upload-property.helpers'
+import {onAddFeature, onAddImage, setOptionList, formatCheckboxId, onRemoveFeature, formatDeleteFeatureButtonId, setCheckboxList, addElement, removeElement } from './upload-property.helpers'
 import {fromValidation} from './upload-property-validator'
-import { history } from '../../core/router';
+import { history } from '../../core/router'
 
 
  let newProperty = {
@@ -13,7 +13,7 @@ import { history } from '../../core/router';
     email: '',
     phone: '',
     price: '',
-    salesTypeId: [],
+    saleTypes: [],
     address: '',
     city: '',
     province: '',
@@ -22,12 +22,10 @@ import { history } from '../../core/router';
     bathrooms:'',
     locationUrl: '',
     mainFeatures: [],
-    equipmentsIds: [],
+    equipments: [],
     images: [],
 
  }
-
-const addElement = value => {newProperty = {...newProperty, salesTypes: {...newProperty.salesType, value} }};
 
 
 const setEvents = list => {
@@ -35,7 +33,11 @@ const setEvents = list => {
       const id = formatCheckboxId(el);
       onUpdateField(id, event => {
          const value = event.target.value;
-         addElement(value);
+         if (event.target.checked === true) {
+            newProperty = addElement(value, newProperty, id);
+         }else {
+            newProperty = removeElement(value, newProperty, id);
+         }
       })
    })
 }
@@ -44,16 +46,17 @@ Promise.all([getSaleTypeList(), getProvinceList(), getEquipments()]).then(
    ([saleTypeList, provinceList, equipmentsList]) => {
    setCheckboxList(saleTypeList, 'saleTypes');
    setCheckboxList(equipmentsList, 'equipments');
-   setOptionList(provinceList, 'province')
-  setEvents(saleTypeList, 'saleTypes');
-setEvents(equipmentsList, 'equipments');
+   setOptionList(provinceList, 'province');
+   setEvents(saleTypeList, newProperty, 'saleType');
+   setEvents(equipmentsList, newProperty, 'equipments')
+
    
    }
    )
      
    onUpdateField('newFeature', event => {
       const value = event.target.value;
-      newProperty = {...newProperty, mainFeatures: value}
+      newProperty = {...newProperty, newFeatures: value}
    });
 
 
@@ -129,7 +132,6 @@ setEvents(equipmentsList, 'equipments');
 
       });
 
-
    onSubmitForm('insert-feature-button', () =>{
       const value = document.getElementById('newFeature').value;
       if (value) {
@@ -138,24 +140,24 @@ setEvents(equipmentsList, 'equipments');
          onAddFeature(value);
          onSubmitForm(deleteId, () => {
             onRemoveFeature(value);
-            newProperty = removeElement(value, newProperty, 'mainFeatures')
+            newProperty =  removeElement(value, newProperty, 'mainFeatures' )
+         
          })
       }
    })
 
+
    onAddFile('add-image', value => {
       onAddImage(value);
-      addElement(value, 'add-image')
+      //newProperty = addElement(value, newProperty, 'add-image')
+      
    })
-
-
-
-
 
    onSubmitForm('save-button', () =>{
       fromValidation.validateForm(newProperty).then(result => {
          onSetFormErrors(result);
          const apiPropertyUpload = mapPropertyUploadApiToVm (newProperty)
+         console.log(apiPropertyUpload)
          if(result.succeeded) {
             uploadProperty(apiPropertyUpload).then(() => {history.back()})
          }

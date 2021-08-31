@@ -24,7 +24,7 @@ const validationSchema = {
         validator:Validators.required,
         message: 'Campo requerido'
     }], 
-    salesTypeId: [{
+    saleTypeId: [{
         validator:Validators.required,
         message: 'Campo requerido'
     }], 
@@ -36,10 +36,10 @@ const validationSchema = {
         validator:Validators.required,
         message: 'Campo requerido'
     }], 
-    province: [{
+    /*province: [{
         validator:Validators.required,
         message: 'Campo requerido'
-    }], 
+    }], */
     squareMeter: [{
         validator:Validators.required,
         message: 'Campo requerido'
