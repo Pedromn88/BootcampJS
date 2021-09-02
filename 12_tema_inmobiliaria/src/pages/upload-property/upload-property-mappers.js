@@ -1,28 +1,23 @@
-export const mapPropertyUpdateListApiToVm = propertyList =>
-Array.isArray(propertyList)
-? getPropertyUpdateList.map(property => mapPropertyUploadApiToVm(property))
-: [];
-
-
-export const mapPropertyUploadApiToVm = (property) => ({
+export const mapUploadPropertyFromApiToVM = (property) => {
+  return {
+    id: property.id,
     title: property.title,
-    notes: property.notes, 
+    notes: property.notes,
     email: property.email,
     phone: property.phone,
-    price: property.price,
-    saletypes:property.saletypes,
+    price: parseInt(property.price),
+    saleTypeIds: Array.isArray(property.saleTypeIds) ? property.saleTypeIds : '',
     address: property.address,
     city: property.city,
-    province: property.province,
-    squareMeter: `${property.squareMeter} m2`,
-    rooms: property.rooms,
-    bathrooms:property.bathrooms,
+    provinceId: property.provinceId,
+    squareMeter: parseInt(property.squareMeter),
+    rooms: parseInt(property.rooms),
+    bathrooms: parseInt(property.bathrooms),
     locationUrl: property.locationUrl,
-    mainFeatures: property.mainFeatures,
-    equipments: property.equipmentIds,
-    images:Array.isArray(property.images) ? property.images : [], 
-});
-    
-
+    mainFeatures: Array.isArray(property.mainFeatures) ? property.mainFeatures : '',
+    equipmentIds: Array.isArray(property.equipmentIds) ? property.equipmentIds : '',
+    images: Array.isArray(property.images) ? property.images : '',
+  };
+};
 
 

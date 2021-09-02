@@ -1,23 +1,32 @@
 import Axios from 'axios';
 
-const saleTypeListUrl = `${process.env.BASE_API_URL}/saletypes`;
-export const getSaleTypeList = () => Axios.get(saleTypeListUrl).then(response => {
-    return response.data
-})
+const equipmentListUrl = `${process.env.BASE_API_URL}/equipments`;
+
+const salesTypeUrl = `${process.env.BASE_API_URL}/saleTypes`;
+
+export const getSalesTypeList = () =>
+  Axios.get(salesTypeUrl).then(response => {
+    return response.data;
+  });
+
+
+export const getEquipmentList = () =>
+  Axios.get(equipmentListUrl).then(response => {
+    return response.data;
+  });
 
 const provinceListUrl = `${process.env.BASE_API_URL}/provinces`;
-export const getProvinceList = () => Axios.get(provinceListUrl).then(response => {
-    return response.data
-})
 
+export const getProvinceList = () =>
+  Axios.get(provinceListUrl).then(response => {
+    return response.data;
+  });
 
-const equiptmentsurl = `${process.env.BASE_API_URL}/equipments`;
+const insertPropertyUrl = `${process.env.BASE_API_URL}/properties`;
 
-export const getEquipments = () => Axios.get(equiptmentsurl).then(response => {
-    return response.data
-})
-const urlProperties = `${process.env.BASE_API_URL}/properties`;
+export const insertProperty = property => Axios.post(`${insertPropertyUrl}`, property).then(({
+  data
+}) => data);
 
-export const uploadProperty = UploadEquitmepts => Axios.post(urlProperties, UploadEquitmepts).then(({ data }) => data);
 
 
