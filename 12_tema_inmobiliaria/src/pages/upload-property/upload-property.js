@@ -1,36 +1,10 @@
-import {
-   history
- } from '../../core/router/history';
- import {
-   formValidation,
-   equipmentValidation
+import {history} from '../../core/router/history';
+ import {formValidation, equipmentValidation
  } from './upload-property-validator';
- import {
-   onSetError,
-   onAddFile,
-   onUpdateField,
-   onSubmitForm,
-   onSetFormErrors,
- } from '../../common/helpers';
- import {
-   formatDeleteFeatureButtonId,
-   setCheckboxList,
-   setOptionList,
-   onAddImage,
-   onRemoveFeature,
-   onAddFeature,
-   addElement,
-   removeElement,
- } from './upload-property.helpers';
- import {
-   getSalesTypeList,
-   getProvinceList,
-   getEquipmentList,
-   insertProperty
- } from './upload-property.api';
- import {
-   mapUploadPropertyFromApiToVM
- } from './upload-property-mappers';
+ import {onSetError,onAddFile,onUpdateField,onSubmitForm,onSetFormErrors,} from '../../common/helpers';
+ import {formatDeleteFeatureButtonId,setCheckboxList,setOptionList,onAddImage,onRemoveFeature,onAddFeature,addElement,removeElement,} from './upload-property.helpers';
+ import {getSalesTypeList,getProvinceList,getEquipmentList,insertProperty} from './upload-property.api';
+ import {mapUploadPropertyFromApiToVM} from './upload-property-mappers';
  
  let uploadProperty = {
    id: '',
